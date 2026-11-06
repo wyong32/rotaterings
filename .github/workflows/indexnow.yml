@@ -30,6 +30,16 @@ jobs:
         with:
           ref: main
 
+      - name: Route production checks directly to Vercel
+        run: |
+          set -euo pipefail
+          origin_ip="$(getent ahostsv4 cname.vercel-dns.com | awk 'NR == 1 { print $1 }')"
+          if [ -z "$origin_ip" ]; then
+            echo "Could not resolve the Vercel production origin" >&2
+            exit 1
+          fi
+          echo "$origin_ip rotaterings.online" | sudo tee -a /etc/hosts >/dev/null
+
       - name: Wait for the matching production manifest
         id: production
         env:

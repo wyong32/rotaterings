@@ -6,6 +6,7 @@ build/
 coverage/
 *.tsbuildinfo
 .level-assets/
+.indexnow/
 
 docs/
 
