@@ -1,0 +1,112 @@
+name: Notify Bing IndexNow
+
+on:
+  push:
+    branches:
+      - main
+  deployment_status:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: indexnow-rotaterings-production
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'push' ||
+      (github.event.deployment_status.state == 'success' &&
+       github.event.deployment.environment == 'Production' &&
+       github.event.sender.login == 'vercel[bot]')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the production branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Wait for the matching production manifest
+        id: production
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          DEPLOYMENT_SHA: ${{ github.event.deployment.sha }}
+          PUSH_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          if [ "$EVENT_NAME" = "deployment_status" ]; then
+            expected_sha="$DEPLOYMENT_SHA"
+          elif [ "$EVENT_NAME" = "push" ]; then
+            expected_sha="$PUSH_SHA"
+          else
+            expected_sha="$(git rev-parse HEAD)"
+          fi
+          mkdir -p .indexnow
+          for attempt in $(seq 1 30); do
+            curl --fail --silent --show-error --location \
+              --output .indexnow/current.json \
+              https://rotaterings.online/seo-manifest.json || true
+            live_sha="$(jq -r '.deployment.gitCommitSha // empty' .indexnow/current.json 2>/dev/null || true)"
+            if [ "$live_sha" = "$expected_sha" ]; then
+              echo "Production manifest matches $expected_sha"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Production did not publish the expected commit: $expected_sha" >&2
+          exit 1
+
+      - name: Restore the latest successful notification checkpoint
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPOSITORY: ${{ github.repository }}
+          GH_API_URL: ${{ github.api_url }}
+        run: |
+          set -euo pipefail
+          printf 'null\n' > .indexnow/checkpoint.json
+          artifact_id="$(curl --fail --silent --show-error \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "$GH_API_URL/repos/$GH_REPOSITORY/actions/artifacts?per_page=100" |
+            jq -r '[.artifacts[] | select((.expired | not) and (.name | startswith("indexnow-rotaterings-production-")))] | sort_by(.created_at) | last | .id // empty')"
+          if [ -n "$artifact_id" ]; then
+            curl --fail --silent --show-error --location \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              --output .indexnow/checkpoint.zip \
+              "$GH_API_URL/repos/$GH_REPOSITORY/actions/artifacts/$artifact_id/zip"
+            unzip -o .indexnow/checkpoint.zip -d .indexnow/restored
+            restored="$(find .indexnow/restored -name checkpoint.json -type f | head -n 1)"
+            if [ -z "$restored" ]; then
+              echo "The checkpoint artifact is missing checkpoint.json" >&2
+              exit 1
+            fi
+            cp "$restored" .indexnow/checkpoint.json
+          fi
+
+      - name: Validate production resources and notify IndexNow
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location \
+            --output .indexnow/key.txt \
+            https://rotaterings.online/31f106bf49733ffad3e10177719671d2.txt
+          node scripts/validate-seo-manifest.mjs .indexnow/current.json
+          node scripts/notify-indexnow.mjs \
+            --current .indexnow/current.json \
+            --checkpoint .indexnow/checkpoint.json \
+            --key-file .indexnow/key.txt \
+            --manifest-url https://rotaterings.online/seo-manifest.json \
+            --send \
+            --production
+
+      - name: Save the successful notification checkpoint
+        uses: actions/upload-artifact@v4
+        with:
+          name: indexnow-rotaterings-production-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .indexnow/checkpoint.json
+          retention-days: 90
+          if-no-files-found: error

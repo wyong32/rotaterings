@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 25% 97%; /* #FAF8F3 - warm cream background */
+    --foreground: 30 10% 25%; /* #3D3A35 - dark brown text */
+    --card: 0 0% 100%; /* #FFFFFF - white cards */
+    --card-foreground: 30 10% 25%; /* #3D3A35 - dark brown text */
+    --popover: 0 0% 100%; /* #FFFFFF - white popover */
+    --popover-foreground: 30 10% 25%; /* #3D3A35 - dark brown text */
+    --primary: 25 87% 34%; /* dark orange with AA contrast on light backgrounds */
+    --primary-foreground: 0 0% 100%; /* white text on primary */
+    --secondary: 40 30% 92%; /* #F2EDE3 - light beige */
+    --secondary-foreground: 30 10% 25%; /* #3D3A35 - dark text */
+    --muted: 40 30% 92%; /* #F2EDE3 - light muted background */
+    --muted-foreground: 30 8% 42%; /* #746B63 - accessible secondary text */
+    --accent: 25 87% 34%; /* dark orange accent */
+    --accent-foreground: 0 0% 100%; /* white text on accent */
+    --destructive: 0 84% 60%; /* red - errors */
+    --destructive-foreground: 0 0% 98%; /* white */
+    --border: 35 20% 88%; /* #E8E3D8 - light tan border */
+    --input: 35 20% 88%; /* #E8E3D8 - light tan input border */
+    --ring: 25 87% 34%; /* dark orange focus ring */
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 30 15% 12%; /* #1F1C18 - dark warm brown background */
+    --foreground: 40 25% 92%; /* #F0EDE8 - light cream text */
+    --card: 30 12% 16%; /* #292621 - dark brown card */
+    --card-foreground: 40 25% 92%; /* #F0EDE8 - light cream text */
+    --popover: 30 12% 16%; /* #292621 - dark brown popover */
+    --popover-foreground: 40 25% 92%; /* #F0EDE8 - light cream text */
+    --primary: 25 80% 68%; /* light orange for dark backgrounds */
+    --primary-foreground: 30 15% 12%; /* dark text on primary */
+    --secondary: 30 10% 20%; /* #322F2B - slightly lighter secondary */
+    --secondary-foreground: 40 25% 92%; /* #F0EDE8 - light text */
+    --muted: 30 10% 20%; /* #322F2B - muted background */
+    --muted-foreground: 35 15% 65%; /* #A39C91 - light tan text */
+    --accent: 25 80% 68%; /* light orange accent */
+    --accent-foreground: 30 15% 12%; /* dark text on accent */
+    --destructive: 0 84% 60%; /* red - errors */
+    --destructive-foreground: 0 0% 98%; /* white */
+    --border: 30 8% 24%; /* #3B3732 - subtle border */
+    --input: 30 8% 24%; /* #3B3732 - input border */
+    --ring: 25 80% 68%; /* light orange focus ring */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    overflow-x: hidden;
+    height: 100%;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    overflow-x: hidden;
+    max-width: 100vw;
+    min-height: 100%;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-foreground;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
+}
