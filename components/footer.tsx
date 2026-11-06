@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { GAME_DEVELOPER, GAME_NAME, SITE_NAME } from "@/lib/site";
 
-const popularLevels = [1, 2, 5, 8, 10, 13, 17, 20];
-const guideLevels = [3, 4, 6, 9, 12, 14, 16, 19];
+const popularLevels = [1, 2, 4, 5, 7, 8, 9, 10];
+const guideLevels = [1, 3, 4, 6, 7, 8, 9, 10];
 
 export function Footer() {
   return (
@@ -25,7 +25,7 @@ export function Footer() {
               <h2 className="text-2xl font-bold text-foreground">{GAME_NAME}</h2>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              {SITE_NAME} provides Rotate Rings walkthrough videos, level solutions, route-planning tips, and download guidance for the mobile puzzle game by {GAME_DEVELOPER}.
+              {SITE_NAME} provides Rotate Rings walkthrough videos, board screenshots, ring-order solutions, and download guidance for the puzzle game by {GAME_DEVELOPER}.
             </p>
           </div>
 

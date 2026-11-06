@@ -48,9 +48,9 @@ test("keeps public and private outputs separate", () => {
 });
 
 test("watermark SVG is transparent and uses the requested label", () => {
-  const svg = buildWatermarkSvg("jambussandfall.org", 600).toString("utf8");
-  assert.match(svg, /jambussandfall\.org/);
-  assert.match(svg, /fill-opacity="0\.24"/);
+  const svg = buildWatermarkSvg("rotaterings.online", 600).toString("utf8");
+  assert.match(svg, /rotaterings\.online/);
+  assert.match(svg, /fill-opacity="0\.38"/);
   assert.doesNotMatch(svg, /<rect/);
 });
 
@@ -77,7 +77,7 @@ test("writes a 600x500 public cover and private lossless match image", async (t)
     source,
     paths,
     crop: { x: 100, y: 100, width: 600, height: 500 },
-    watermark: "jambussandfall.org",
+    watermark: "rotaterings.online",
   });
 
   const readShape = async (file) => {
@@ -116,7 +116,7 @@ test("guide export preserves a lower resolution portrait without upscaling", asy
     .png()
     .toFile(source);
 
-  await writeGuideImage({ source, output, watermark: "jambussandfall.org" });
+  await writeGuideImage({ source, output, watermark: "rotaterings.online" });
   const { width, height, format } = await sharp(output).metadata();
   assert.deepEqual({ width, height, format }, { width: 540, height: 960, format: "webp" });
 });
@@ -154,7 +154,7 @@ test("guide export uses the configured complete-interface crop", async (t) => {
   await writeGuideImage({
     source,
     output,
-    watermark: "jambussandfall.org",
+    watermark: "rotaterings.online",
     crop: { x: 240, y: 100, width: 600, height: 1200 },
   });
 

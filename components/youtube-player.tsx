@@ -8,9 +8,10 @@ interface YouTubePlayerProps {
   videoId: string;
   title: string;
   thumbnail: string;
+  startSeconds?: number;
 }
 
-export function YouTubePlayer({ videoId, title, thumbnail }: YouTubePlayerProps) {
+export function YouTubePlayer({ videoId, title, thumbnail, startSeconds = 0 }: YouTubePlayerProps) {
   const [playing, setPlaying] = useState(false);
 
   return (
@@ -18,7 +19,7 @@ export function YouTubePlayer({ videoId, title, thumbnail }: YouTubePlayerProps)
       {playing ? (
         <iframe
           className="h-full w-full"
-          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
+          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&start=${Math.max(0, Math.floor(startSeconds))}`}
           title={title}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"

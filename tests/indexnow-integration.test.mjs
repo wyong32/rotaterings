@@ -5,7 +5,7 @@ import { notifyIndexNow } from "../scripts/notify-indexnow.mjs";
 import { validateManifest } from "../scripts/seo-manifest-lib.mjs";
 
 const manifest = JSON.parse(fs.readFileSync("public/seo-manifest.json", "utf8"));
-const key = fs.readFileSync("public/31f106bf49733ffad3e10177719671d2.txt", "utf8").trim();
+const key = fs.readFileSync("public/9a87c67e460ebc82953c717d7bceacee.txt", "utf8").trim();
 const workflow = fs.readFileSync(".github/workflows/indexnow.yml", "utf8");
 const sitemap = fs.readFileSync("app/sitemap.ts", "utf8");
 const levels = JSON.parse(fs.readFileSync("data/levels.json", "utf8"));
@@ -17,8 +17,8 @@ test("SEO manifest lists every public canonical route once", () => {
   assert.deepEqual(validateManifest(manifest), []);
   assert.equal(manifest.entries.length, expectedRouteCount);
   assert.equal(new Set(manifest.entries.map((entry) => entry.canonicalUrl)).size, expectedRouteCount);
-  assert.ok(manifest.entries.some((entry) => entry.canonicalUrl === "https://jambussandfall.org/levels/30/"));
-  assert.ok(manifest.entries.some((entry) => entry.canonicalUrl === "https://jambussandfall.org/find-level/"));
+  assert.ok(manifest.entries.some((entry) => entry.canonicalUrl === "https://rotaterings.online/levels/10/"));
+  assert.ok(manifest.entries.some((entry) => entry.canonicalUrl === "https://rotaterings.online/find-level/"));
 });
 
 test("IndexNow uses a public validation key and waits for production", () => {

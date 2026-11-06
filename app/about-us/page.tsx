@@ -17,10 +17,10 @@ export default function AboutUsPage() {
             <section>
               <h2 className="text-2xl font-bold text-foreground mb-4">Welcome to {SITE_NAME}</h2>
               <p className="leading-relaxed mb-4">
-                {SITE_NAME} is an independent guide site for {GAME_NAME}, the bus-routing and color-matching puzzle by {GAME_DEVELOPER}. We organize walkthrough videos, board images, level solutions, and route notes.
+                {SITE_NAME} is an independent guide site for {GAME_NAME}, the spatial ring puzzle by {GAME_DEVELOPER}. We organize walkthrough videos, full-board images, level solutions, and removal-order notes.
               </p>
               <p className="leading-relaxed">
-                We publish the source video for every listed level. Written notes are added after the bus field, sand picture, parking state, and progress screenshots have been checked against the successful run.
+                Each video-backed guide is checked against the successful run. The written guide records ring positions, starting angles, connections, removal order, difficult transitions, and visible board states. Level 1 is identified separately as an official configuration reconstruction because the public recording starts at Level 2.
               </p>
             </section>
 

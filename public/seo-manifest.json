@@ -1,0 +1,213 @@
+{
+  "schemaVersion": 1,
+  "fingerprintVersion": "rotaterings-content-v1",
+  "siteUrl": "https://rotaterings.online",
+  "generatedAt": "2026-11-06T10:04:45.642Z",
+  "entries": [
+    {
+      "path": "/",
+      "canonicalUrl": "https://rotaterings.online/",
+      "indexable": true,
+      "contentFingerprint": "sha256:cdc901daa897b5c4cf40d226f5a6e29c43890b2aa9bd302e9acaf48959ad470d",
+      "lastModified": "2026-11-06T10:04:45.642Z",
+      "changeFrequency": "daily",
+      "priority": 1
+    },
+    {
+      "path": "/about-us/",
+      "canonicalUrl": "https://rotaterings.online/about-us/",
+      "indexable": true,
+      "contentFingerprint": "sha256:00dd33706bab73175f489c2cb969c5d2d2e644d860f64297ec077ee669de37c9",
+      "lastModified": "2026-11-06T09:59:36.311Z",
+      "changeFrequency": "monthly",
+      "priority": 0.5
+    },
+    {
+      "path": "/blog/",
+      "canonicalUrl": "https://rotaterings.online/blog/",
+      "indexable": true,
+      "contentFingerprint": "sha256:fe46ed09caf56945a9cb0cbf26d89ebe87c97e1c70f5b70ecaad499c47520bc2",
+      "lastModified": "2026-11-06T10:04:45.642Z",
+      "changeFrequency": "daily",
+      "priority": 0.9
+    },
+    {
+      "path": "/blog/find-rotate-rings-level-by-screenshot/",
+      "canonicalUrl": "https://rotaterings.online/blog/find-rotate-rings-level-by-screenshot/",
+      "indexable": true,
+      "contentFingerprint": "sha256:ac5fde3445ee84cdeb68d14d9739b5068566512e0a68b3c8036d7a8390fa520e",
+      "lastModified": "2026-11-06T10:04:45.642Z",
+      "changeFrequency": "monthly",
+      "priority": 0.7
+    },
+    {
+      "path": "/blog/how-to-play-rotate-rings/",
+      "canonicalUrl": "https://rotaterings.online/blog/how-to-play-rotate-rings/",
+      "indexable": true,
+      "contentFingerprint": "sha256:e1fba8f79b6367bd160f9f4dfb55684ae5a4388eaa59e0c38e21d30190825e74",
+      "lastModified": "2026-11-06T10:04:45.642Z",
+      "changeFrequency": "monthly",
+      "priority": 0.7
+    },
+    {
+      "path": "/blog/rotate-rings-removal-order-strategy/",
+      "canonicalUrl": "https://rotaterings.online/blog/rotate-rings-removal-order-strategy/",
+      "indexable": true,
+      "contentFingerprint": "sha256:c31d79d5cb0593dbeec900ef8eaf68d11c1e047261ee6b664e5f60149b10cca1",
+      "lastModified": "2026-11-06T10:04:45.642Z",
+      "changeFrequency": "monthly",
+      "priority": 0.7
+    },
+    {
+      "path": "/contact-us/",
+      "canonicalUrl": "https://rotaterings.online/contact-us/",
+      "indexable": true,
+      "contentFingerprint": "sha256:249f20e4ac4675a71a7aac88d0f47871851c8c50d8a110cb4804f86bfbb7a661",
+      "lastModified": "2026-11-06T09:59:36.311Z",
+      "changeFrequency": "monthly",
+      "priority": 0.5
+    },
+    {
+      "path": "/download/",
+      "canonicalUrl": "https://rotaterings.online/download/",
+      "indexable": true,
+      "contentFingerprint": "sha256:bb0e07c32aaad5745611d800974ca148e26613259d58ac7dbe7316409da760e2",
+      "lastModified": "2026-11-06T10:04:45.642Z",
+      "changeFrequency": "monthly",
+      "priority": 0.8
+    },
+    {
+      "path": "/find-level/",
+      "canonicalUrl": "https://rotaterings.online/find-level/",
+      "indexable": true,
+      "contentFingerprint": "sha256:25e088229223bcb5c6be98bcef9c3753b88ad09b74fec630a4193b1f066069f0",
+      "lastModified": "2026-11-06T09:59:36.311Z",
+      "changeFrequency": "weekly",
+      "priority": 0.9
+    },
+    {
+      "path": "/levels/",
+      "canonicalUrl": "https://rotaterings.online/levels/",
+      "indexable": true,
+      "contentFingerprint": "sha256:d66d4a41e445755da95b555265662429b08ef1b206af2ae48d4f88f7dd7459e8",
+      "lastModified": "2026-11-06T09:59:36.311Z",
+      "changeFrequency": "weekly",
+      "priority": 0.9
+    },
+    {
+      "path": "/levels/1/",
+      "canonicalUrl": "https://rotaterings.online/levels/1/",
+      "indexable": true,
+      "contentFingerprint": "sha256:ea3f2516d5361bac4e386b32943d16d073f08f9666e1b13ca3a8c438c5cdd4b2",
+      "lastModified": "2026-11-06T09:59:36.311Z",
+      "changeFrequency": "weekly",
+      "priority": 0.8
+    },
+    {
+      "path": "/levels/10/",
+      "canonicalUrl": "https://rotaterings.online/levels/10/",
+      "indexable": true,
+      "contentFingerprint": "sha256:3d3b11c5a34d1cbd1a9f893e7f88016b66c64158ae58e29840904fb4a2a0d050",
+      "lastModified": "2026-11-06T09:59:36.311Z",
+      "changeFrequency": "weekly",
+      "priority": 0.8
+    },
+    {
+      "path": "/levels/2/",
+      "canonicalUrl": "https://rotaterings.online/levels/2/",
+      "indexable": true,
+      "contentFingerprint": "sha256:95b2c728c40bbb91a0e8743a0b708b5a29a0068964aae81a64c8a97b2bfa0cd1",
+      "lastModified": "2026-11-06T09:59:36.311Z",
+      "changeFrequency": "weekly",
+      "priority": 0.8
+    },
+    {
+      "path": "/levels/3/",
+      "canonicalUrl": "https://rotaterings.online/levels/3/",
+      "indexable": true,
+      "contentFingerprint": "sha256:9512a1758d4f7919904c6ab25a06a0842da6bfb100a7cb459a580c66544521d7",
+      "lastModified": "2026-11-06T09:59:36.311Z",
+      "changeFrequency": "weekly",
+      "priority": 0.8
+    },
+    {
+      "path": "/levels/4/",
+      "canonicalUrl": "https://rotaterings.online/levels/4/",
+      "indexable": true,
+      "contentFingerprint": "sha256:5b7b3141d0210fb49b86e9f88fde84a6f03a61c2e97e8c867240232010c70f0d",
+      "lastModified": "2026-11-06T09:59:36.311Z",
+      "changeFrequency": "weekly",
+      "priority": 0.8
+    },
+    {
+      "path": "/levels/5/",
+      "canonicalUrl": "https://rotaterings.online/levels/5/",
+      "indexable": true,
+      "contentFingerprint": "sha256:56dfb7827ad6f039140ac1a538f96018bb3e302f3a6d31f726415f014fbaa764",
+      "lastModified": "2026-11-06T09:59:36.311Z",
+      "changeFrequency": "weekly",
+      "priority": 0.8
+    },
+    {
+      "path": "/levels/6/",
+      "canonicalUrl": "https://rotaterings.online/levels/6/",
+      "indexable": true,
+      "contentFingerprint": "sha256:919c43880823939a1348c485b50462a359eabb4ebf040d473e49e73db3805dac",
+      "lastModified": "2026-11-06T09:59:36.311Z",
+      "changeFrequency": "weekly",
+      "priority": 0.8
+    },
+    {
+      "path": "/levels/7/",
+      "canonicalUrl": "https://rotaterings.online/levels/7/",
+      "indexable": true,
+      "contentFingerprint": "sha256:2145151d4b1abef483d1a713ab073d632dca169f56b575f4924f39ef84543c7c",
+      "lastModified": "2026-11-06T09:59:36.311Z",
+      "changeFrequency": "weekly",
+      "priority": 0.8
+    },
+    {
+      "path": "/levels/8/",
+      "canonicalUrl": "https://rotaterings.online/levels/8/",
+      "indexable": true,
+      "contentFingerprint": "sha256:77538ba812bfcdad1bfcc80029730cd7471e0bb964c8412da278c2384edd9d11",
+      "lastModified": "2026-11-06T09:59:36.311Z",
+      "changeFrequency": "weekly",
+      "priority": 0.8
+    },
+    {
+      "path": "/levels/9/",
+      "canonicalUrl": "https://rotaterings.online/levels/9/",
+      "indexable": true,
+      "contentFingerprint": "sha256:3ce5e027f582c61d51830d664fe041aace37cc4b4c24d86eeff10b72ac60daca",
+      "lastModified": "2026-11-06T09:59:36.311Z",
+      "changeFrequency": "weekly",
+      "priority": 0.8
+    },
+    {
+      "path": "/privacy-policy/",
+      "canonicalUrl": "https://rotaterings.online/privacy-policy/",
+      "indexable": true,
+      "contentFingerprint": "sha256:5dc2fe9448be42bdbd2880c1c254cd754720e48d354d7ae38c1aed2d95fe32e6",
+      "lastModified": "2026-11-06T09:59:36.311Z",
+      "changeFrequency": "yearly",
+      "priority": 0.3
+    },
+    {
+      "path": "/terms-of-service/",
+      "canonicalUrl": "https://rotaterings.online/terms-of-service/",
+      "indexable": true,
+      "contentFingerprint": "sha256:81606f88d875c0acc65310b8b4cdaef3a8defa0683c5c9f8c473f9c7a060404a",
+      "lastModified": "2026-11-06T09:59:36.311Z",
+      "changeFrequency": "yearly",
+      "priority": 0.3
+    }
+  ],
+  "deletedUrls": [],
+  "deletedAt": {},
+  "deployment": {
+    "provider": "vercel",
+    "environment": "local",
+    "gitCommitSha": "local"
+  }
+}

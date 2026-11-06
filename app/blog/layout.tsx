@@ -3,7 +3,7 @@ import { canonical, OG_IMAGE, SITE_NAME } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Rotate Rings Blog - Guides, Tips & Strategy",
-  description: "Read Rotate Rings strategy articles about bus routes, sand colors, parking capacity, screenshot matching, and level solutions.",
+  description: "Read Rotate Rings strategy articles about gap alignment, interlocked pieces, removal order, screenshot matching, and level solutions.",
   keywords: ["Rotate Rings blog", "Rotate Rings guide", "Rotate Rings tips", "ring puzzle strategy", "circle puzzle walkthrough"],
   authors: [{ name: "Rotate Rings Guide Team" }],
   openGraph: {
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     url: canonical("/blog/"),
     siteName: SITE_NAME,
     title: 'Rotate Rings Blog - Guides, Tips & Strategy',
-    description: 'Read Rotate Rings strategy articles, beginner tips, routing notes, and parking advice.',
+    description: 'Read Rotate Rings strategy articles, beginner tips, ring-order notes, and level solutions.',
     images: [
       {
         url: OG_IMAGE,

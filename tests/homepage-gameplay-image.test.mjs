@@ -5,7 +5,7 @@ import test from "node:test";
 const hero = await readFile("components/home/hero-section.tsx", "utf8");
 
 test("homepage keeps the complete portrait gameplay interface visible", () => {
-  for (const image of ["gameplay-1.webp", "gameplay-2.webp", "gameplay-3.webp"]) {
+  for (const image of ["rotate-rings-level-2.webp", "rotate-rings-level-6.webp", "rotate-rings-level-10.webp"]) {
     assert.match(hero, new RegExp(image.replace(".", "\\.")));
   }
   assert.match(hero, /object-contain/);

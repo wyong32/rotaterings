@@ -93,7 +93,7 @@ jobs:
           set -euo pipefail
           curl --fail --silent --show-error --location \
             --output .indexnow/key.txt \
-            https://rotaterings.online/31f106bf49733ffad3e10177719671d2.txt
+            https://rotaterings.online/9a87c67e460ebc82953c717d7bceacee.txt
           node scripts/validate-seo-manifest.mjs .indexnow/current.json
           node scripts/notify-indexnow.mjs \
             --current .indexnow/current.json \

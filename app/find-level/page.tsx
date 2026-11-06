@@ -8,11 +8,11 @@ import { canonical, SITE_NAME, SITE_URL } from "@/lib/site";
 const faqs = [
   {
     question: "What kind of Rotate Rings screenshot works best?",
-    answer: "Use a clear screenshot that shows the complete pixel-art board. The level can be partly played, but the board should remain visible.",
+    answer: "Use a clear screenshot that shows the complete ring assembly. An opening-state image gives the closest match.",
   },
   {
     question: "Why does my Rotate Rings level number differ from a guide?",
-    answer: "Game updates can reorder boards between devices or releases. This tool compares the board artwork instead of trusting the displayed number.",
+    answer: "Game updates and different editions can reorder puzzles. This tool compares the ring layout instead of trusting the displayed number.",
   },
   {
     question: "Is my screenshot uploaded or saved?",
@@ -72,7 +72,7 @@ export default function FindLevelPage() {
               Find Your Rotate Rings Level by Screenshot
             </h1>
             <p className="mt-4 text-base leading-7 text-muted-foreground sm:text-lg">
-              Match the pixel-art board in your screenshot with available Rotate Rings guides. This helps when a game update changes level numbers.
+              Match the ring layout in your screenshot with available Rotate Rings guides. This helps when an update changes level numbers.
             </p>
           </div>
 
@@ -88,14 +88,14 @@ export default function FindLevelPage() {
             <ScanSearch className="h-6 w-6 text-primary" />
             <h2 className="mt-3 text-xl font-bold text-foreground">How matching works</h2>
             <p className="mt-2 text-sm leading-7 text-muted-foreground">
-              The browser compares board shape, color distribution, and edge patterns with verified level images. It returns five visual candidates for you to confirm.
+              The browser compares ring positions, colors, gaps, and frame shapes with verified opening images. It returns five visual candidates for you to confirm.
             </p>
           </div>
           <div>
             <Shuffle className="h-6 w-6 text-primary" />
             <h2 className="mt-3 text-xl font-bold text-foreground">Why numbers differ</h2>
             <p className="mt-2 text-sm leading-7 text-muted-foreground">
-              Rotate Rings updates can move the same board to a different level number. Matching the board artwork is more reliable than searching only by number.
+              Rotate Rings updates can move the same puzzle to another number. Matching the complete ring assembly is more reliable than searching only by number.
             </p>
           </div>
           <div>

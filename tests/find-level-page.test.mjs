@@ -29,9 +29,9 @@ test("finder exposes a recoverable error state and explicit walkthrough links", 
 test("find-level route has canonical metadata and visible tool documentation", () => {
   const layout = fs.readFileSync("app/find-level/layout.tsx", "utf8");
   const page = fs.readFileSync("app/find-level/page.tsx", "utf8");
-  assert.match(layout, /Find Your Jam Bus:Sandfall Level by Screenshot/);
+  assert.match(layout, /Find Your Rotate Rings Level by Screenshot/);
   assert.match(layout, /canonical\("\/find-level\/"\)/);
-  assert.match(page, /Find Your Jam Bus:Sandfall Level by Screenshot/);
+  assert.match(page, /Find Your Rotate Rings Level by Screenshot/);
   assert.match(page, /stays on your device/i);
   assert.match(page, /WebApplication/);
   assert.match(page, /FAQPage/);

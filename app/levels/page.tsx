@@ -25,7 +25,7 @@ export default function LevelsPage() {
           <p className="text-sm font-bold uppercase text-[#0b7285]">Published guide library</p>
           <h1 className="mt-3 text-4xl font-bold text-[#17313a] sm:text-5xl">Rotate Rings Levels 1-{MAX_LEVEL} Walkthroughs</h1>
           <p className="mt-4 max-w-3xl text-lg leading-8 text-[#435f68]">
-            Browse {TOTAL_GUIDES} checked guides from Level 1 through Level {MAX_LEVEL}. Each page uses a real gameplay video, a board cover, and full-interface progress images.
+            Browse {TOTAL_GUIDES} checked guides from Level 1 through Level {MAX_LEVEL}. Each page includes board geometry, removal order, progress images, and source notes.
           </p>
           <Link href="/find-level/" className="mt-6 inline-flex items-center gap-2 rounded-md border border-[#79b9c4] bg-white px-4 py-2 font-bold text-[#0b7285] hover:border-[#0b7285]">
             <ScanSearch className="h-5 w-5" />Find your board by screenshot
@@ -50,9 +50,9 @@ export default function LevelsPage() {
 
         <section className="mx-auto mt-14 max-w-4xl border-t border-border pt-10">
           <h2 className="text-3xl font-bold">How to Use These Walkthroughs</h2>
-          <p className="mt-4 leading-7 text-muted-foreground">Start by comparing the opening board image with your game. Watch the video when you need the exact route order, then use the written checkpoints to confirm which sand colors and bus groups should remain. If your numbered level shows a different picture, use the screenshot finder.</p>
+          <p className="mt-4 leading-7 text-muted-foreground">Start by comparing the opening ring layout with your game. Use the removal table to identify the next piece, its board position, and the gap direction. If your numbered level shows a different puzzle, use the screenshot finder.</p>
           <h2 className="mt-10 text-3xl font-bold">Why Some Levels May Be Missing Later</h2>
-          <p className="mt-4 leading-7 text-muted-foreground">The guide library follows confirmed videos. Missing numbers are skipped until a complete source is available; the site does not create empty or guessed level pages.</p>
+          <p className="mt-4 leading-7 text-muted-foreground">The guide library follows checked recordings and official game data. Missing numbers are skipped until a complete source is available; the site does not create empty or guessed level pages.</p>
         </section>
       </main>
       <Footer />

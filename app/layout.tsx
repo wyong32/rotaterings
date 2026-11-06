@@ -37,7 +37,7 @@ export const metadata: Metadata = {
         url: OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: 'Rotate Rings bus routing puzzle guide'
+        alt: 'Rotate Rings interlocking ring puzzle walkthrough guide'
       }
     ]
   },

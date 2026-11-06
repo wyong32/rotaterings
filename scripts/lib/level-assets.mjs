@@ -70,7 +70,8 @@ export function buildWatermarkSvg(text, width) {
 
   return Buffer.from(
     `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${fontSize + padding * 2}">` +
-      `<text x="${padding}" y="${fontSize + padding}" fill="#ffffff" fill-opacity="0.24" ` +
+      `<text x="${padding}" y="${fontSize + padding}" fill="#17313a" fill-opacity="0.38" ` +
+      `stroke="#ffffff" stroke-opacity="0.55" stroke-width="1.5" paint-order="stroke" ` +
       `font-family="Arial, sans-serif" font-size="${fontSize}" font-weight="700">${safeText}</text>` +
       `</svg>`,
   );
@@ -122,6 +123,12 @@ export async function writeGuideImage({ source, output, watermark, crop }) {
   const sourceHeight = crop?.height || metadata.height;
   const size = chooseGuideSize(sourceWidth, sourceHeight);
   const watermarkSvg = buildWatermarkSvg(watermark, size.width);
+  const recorderOverlayMask = Buffer.from(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${size.width}" height="${size.height}">` +
+      `<ellipse cx="${size.width - Math.round(size.width * 0.055)}" cy="${Math.round(size.height * 0.667)}" ` +
+      `rx="${Math.round(size.width * 0.075)}" ry="${Math.round(size.width * 0.082)}" fill="#f8ebd8"/>` +
+      `</svg>`,
+  );
 
   await fs.mkdir(path.dirname(output), { recursive: true });
   let pipeline = sharp(source);
@@ -140,7 +147,10 @@ export async function writeGuideImage({ source, output, watermark, crop }) {
       withoutEnlargement: true,
       background: { r: 248, g: 216, b: 171, alpha: 1 },
     })
-    .composite([{ input: watermarkSvg, gravity: "southwest" }])
+    .composite([
+      { input: recorderOverlayMask, gravity: "northwest" },
+      { input: watermarkSvg, gravity: "southwest" },
+    ])
     .webp({ quality: 90 })
     .toFile(output);
 }

@@ -3,15 +3,15 @@ import { canonical, OG_IMAGE, SITE_NAME } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Download Rotate Rings - iOS & Android",
-  description: "Download Rotate Rings for iOS and Android from the official store listings. Route colored buses, match sand, and clear layered pictures.",
-  keywords: ["Download Rotate Rings", "Rotate Rings iOS", "Rotate Rings Android", "ant puzzle game download", "color sorting game"],
+  description: "Download Rotate Rings for iOS and Android from the official store listings. Rotate interlocked circles, align gaps, and release each piece.",
+  keywords: ["Download Rotate Rings", "Rotate Rings iOS", "Rotate Rings Android", "ring puzzle game download", "circle puzzle game"],
   authors: [{ name: "Rotate Rings Guide Team" }],
   openGraph: {
     type: 'website',
     url: canonical("/download/"),
     siteName: SITE_NAME,
     title: 'Download Rotate Rings - iOS & Android',
-    description: 'Download Rotate Rings and solve bus routing and sand color puzzles.',
+    description: 'Download Rotate Rings and solve interlocking circle puzzles.',
     images: [
       {
         url: OG_IMAGE,
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Download Rotate Rings - iOS & Android',
-    description: 'Download Rotate Rings and solve bus routing and sand color puzzles.',
+    description: 'Download Rotate Rings and solve interlocking circle puzzles.',
     images: [OG_IMAGE]
   },
   robots: {

@@ -4,22 +4,22 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
-import { ArrowRight, BusFront, ChevronLeft, ChevronRight, ScanSearch, Search, Waypoints } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, CircleDot, ScanSearch, Search, Workflow } from "lucide-react";
 import { getLevelById } from "@/lib/data";
 import { MAX_LEVEL } from "@/lib/level-utils";
 
 const gameplayImages = [
   {
-    src: "/images/store/gameplay-1.webp",
-    alt: "Rotate Rings gameplay with a chick sand picture and a spiral vehicle board",
+    src: "/images/store/rotate-rings-level-2.webp",
+    alt: "Complete Rotate Rings Level 2 game interface with interlocked colored rings",
   },
   {
-    src: "/images/store/gameplay-2.webp",
-    alt: "Rotate Rings gameplay showing a colorful sand picture and directional buses",
+    src: "/images/store/rotate-rings-level-6.webp",
+    alt: "Complete Rotate Rings Level 6 game interface showing a linked ring puzzle",
   },
   {
-    src: "/images/store/gameplay-3.webp",
-    alt: "Rotate Rings gameplay showing another complete puzzle and parking interface",
+    src: "/images/store/rotate-rings-level-10.webp",
+    alt: "Complete Rotate Rings Level 10 game interface showing rings, rails, and clamps",
   },
 ];
 
@@ -53,7 +53,7 @@ export function HeroSection() {
           <p className="text-sm font-bold uppercase text-[#0b7285]">Video and screenshot walkthroughs</p>
           <h1 className="mt-3 text-4xl font-bold leading-tight text-[#17313a] sm:text-6xl">Rotate Rings Level Guides</h1>
           <p className="mt-5 max-w-2xl text-lg leading-8 text-[#435f68]">
-            Find the correct bus order, compare full-board screenshots, and watch complete solutions for the published Rotate Rings levels.
+            Match your ring layout, follow the verified removal order, and compare full-interface screenshots for each published level.
           </p>
 
           <form onSubmit={submit} className="mt-8 flex max-w-xl gap-2" aria-label="Find a Rotate Rings level">
@@ -76,8 +76,8 @@ export function HeroSection() {
           </form>
 
           <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-[#31515b]">
-            <span className="inline-flex items-center gap-2"><BusFront className="h-4 w-4 text-[#d9480f]" />20 verified guides</span>
-            <span className="inline-flex items-center gap-2"><Waypoints className="h-4 w-4 text-[#0b7285]" />Board-specific routing notes</span>
+            <span className="inline-flex items-center gap-2"><CircleDot className="h-4 w-4 text-[#d9480f]" />10 verified guides</span>
+            <span className="inline-flex items-center gap-2"><Workflow className="h-4 w-4 text-[#0b7285]" />Board-specific ring order</span>
             <Link href="/find-level/" className="inline-flex items-center gap-2 text-[#b93d0d] hover:underline">
               <ScanSearch className="h-4 w-4" aria-hidden="true" />
               Find by Screenshot when level numbers change

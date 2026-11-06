@@ -28,4 +28,6 @@ export interface Level {
   assetVersion?: number;
   videoUploadDate?: string;
   videoDurationIso?: string;
+  sourceType?: "youtube-video" | "official-online-config";
+  sourceStartSecond?: number;
 }

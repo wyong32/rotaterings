@@ -3,31 +3,20 @@ import path from "node:path";
 import sharp from "sharp";
 
 const root = process.cwd();
-const sourceDir = path.join(root, ".level-assets", "store");
 const outputDir = path.join(root, "public", "images", "store");
 const screenshots = [
-  "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/d9/1a/46/d91a46d6-2ea5-09dc-b365-313b4beae75d/_U5ba3_U4f20_U56feios6.5_U6807_U98983.png/1242x2688bb.png",
-  "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/04/61/d5/0461d507-be90-6c66-ab6f-ce1344f36bab/_U5ba3_U4f20_U56feios6.5_U6807_U98982.png/1242x2688bb.png",
-  "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/a4/3b/3f/a43b3f23-e1a9-db78-2e4c-12071ffe1d15/_U5ba3_U4f20_U56feios6.5-2.png/1242x2688bb.png",
+  { level: 2, source: path.join(root, "public", "levels", "2", "steps", "step-1.webp") },
+  { level: 6, source: path.join(root, "public", "levels", "6", "steps", "step-1.webp") },
+  { level: 10, source: path.join(root, "public", "levels", "10", "steps", "step-1.webp") },
 ];
 
-await fs.mkdir(sourceDir, { recursive: true });
 await fs.mkdir(outputDir, { recursive: true });
 
-for (const [index, url] of screenshots.entries()) {
-  const source = path.join(sourceDir, `gameplay-${index + 1}.png`);
-  try {
-    await fs.access(source);
-  } catch {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`Screenshot download failed: ${response.status}`);
-    await fs.writeFile(source, Buffer.from(await response.arrayBuffer()));
-  }
-
+for (const { level, source } of screenshots) {
   await sharp(source)
-    .resize(576, 1246, { fit: "cover", position: "top" })
+    .resize(576, 1246, { fit: "contain", background: "#f6f3ee" })
     .webp({ quality: 88 })
-    .toFile(path.join(outputDir, `gameplay-${index + 1}.webp`));
+    .toFile(path.join(outputDir, `rotate-rings-level-${level}.webp`));
 }
 
 const logo = path.join(root, "public", "logo.png");
@@ -38,7 +27,7 @@ for (const size of [16, 32]) {
 }
 await sharp(logoBuffer).resize(180, 180).png().toFile(path.join(root, "public", "apple-touch-icon.png"));
 
-const screenshot = await sharp(path.join(outputDir, "gameplay-1.webp"))
+const screenshot = await sharp(path.join(outputDir, "rotate-rings-level-2.webp"))
   .resize(360, 630, { fit: "cover", position: "top" })
   .webp()
   .toBuffer();
@@ -57,4 +46,4 @@ await sharp(title)
   .webp({ quality: 90 })
   .toFile(path.join(root, "public", "images", "rotate-rings-og.webp"));
 
-console.log("Generated store screenshots, icons, and OpenGraph image.");
+console.log("Generated gameplay screenshots, icons, and OpenGraph image.");

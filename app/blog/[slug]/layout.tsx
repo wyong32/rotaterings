@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: post.title,
     description: post.excerpt,
-    keywords: ["Rotate Rings", post.category, "guide", "walkthrough", "tips", "bus route puzzle"],
+    keywords: ["Rotate Rings", post.category, "ring puzzle", "guide", "walkthrough", "tips"],
     authors: [{ name: post.author }],
     openGraph: {
       type: 'article',
@@ -96,7 +96,7 @@ export default async function BlogPostLayout({ params, children }: Props) {
       "@id": canonical(`/blog/${slug}/`)
     },
     "articleSection": post.category,
-    "keywords": "Rotate Rings, bus route puzzle, sand matching, guide, walkthrough, tips"
+    "keywords": "Rotate Rings, ring puzzle, gap alignment, removal order, guide, walkthrough, tips"
   };
 
   return (

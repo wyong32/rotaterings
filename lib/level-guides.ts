@@ -12,62 +12,69 @@ export interface LevelGuideFaq {
   answer: string;
 }
 
-export type LevelMoveDirection =
-  | "up"
-  | "up-right"
-  | "right"
-  | "down-right"
-  | "down"
-  | "down-left"
-  | "left"
-  | "up-left";
+export interface RingBoardItem {
+  id: number;
+  color: string;
+  hex: string;
+  x: number;
+  y: number;
+  position: string;
+  initialAngle: number;
+  scale: number;
+  openingDegrees: number;
+  linkedPoints: number;
+  fixed: boolean;
+}
+
+export interface RingBoardData {
+  officialConfigId: number;
+  ringCount: number;
+  supportCount: number;
+  clampCount: number;
+  colors: string[];
+  rings: RingBoardItem[];
+}
+
+export interface RingRemovalCheckpoint {
+  order: number;
+  piece: string;
+  color: string;
+  position: string;
+  action: string;
+  result: string;
+}
 
 export interface LevelGuideStats {
-  parkingCapacity: number;
+  ringCount: number;
+  supportCount: number;
+  clampCount: number;
   verifiedMoveCount: number;
   colorCount: number;
   solutionDuration: string;
-  criticalRoute: string;
-}
-
-export interface LevelMoveCheckpoint {
-  order: number;
-  color: string;
-  vehicle: string;
-  direction: LevelMoveDirection;
-  row?: number;
-  column?: number;
-  region: string;
-  xPercent: number;
-  yPercent: number;
-  purpose: string;
-  parkingCheck: string;
-  precondition?: string;
-  instruction?: string;
-  result?: string;
-  risk?: string;
+  criticalMove: string;
 }
 
 export interface LevelPhaseMetric {
   phase: string;
   moveRange: string;
   boardState: string;
-  parkingRule: string;
+  rule: string;
 }
 
 export interface VerifiedLevelGuide {
-  positionSystem?: 'full-frame';
   objective: string;
   keyChallenge: string;
   quickAnswer: string;
   overallStrategy: string[];
   startingBoard: string;
+  boardData: RingBoardData;
+  removalOrder: RingRemovalCheckpoint[];
   stats: LevelGuideStats;
-  moveCheckpoints: LevelMoveCheckpoint[];
   phaseMetrics: LevelPhaseMetric[];
   steps: LevelGuideStep[];
   beforeMove: string[];
   stuckPoint: string;
+  sourceNote: string;
   faqs: LevelGuideFaq[];
 }
 
@@ -83,19 +90,19 @@ export function getLevelFaqs(id: string, guide?: VerifiedLevelGuide): LevelGuide
   return [
     {
       question: `How do I solve Rotate Rings Level ${id}?`,
-      answer: `Use the complete Level ${id} video and keep the same bus order, open routes, and parking state shown in the recording.`,
+      answer: "Compare the opening layout, then follow the verified ring removal order without rotating a blocked center piece early.",
     },
     {
       question: `Why does my Rotate Rings Level ${id} board look different?`,
-      answer: "Game updates can reorder level numbers. Use the screenshot finder to compare the board rather than relying only on its number.",
+      answer: "Game updates can reorder levels. Use the screenshot finder to match the ring layout instead of relying only on the number.",
     },
     {
-      question: "What should I check before selecting a bus?",
-      answer: "Confirm that the bus can reach the road, a parking space is open, and matching sand is exposed.",
+      question: "What should I check before rotating a ring?",
+      answer: "Find the gap, identify the active connection, and confirm that the exit beyond that connection is open.",
     },
     {
-      question: `Is a written move list available for Level ${id}?`,
-      answer: "The written steps are published only after the full video has been checked. Until then, the embedded video remains the source solution.",
+      question: `Is the Level ${id} order verified?`,
+      answer: "Written steps are published only after the board and completion state have been checked against a recording or official game configuration.",
     },
   ];
 }

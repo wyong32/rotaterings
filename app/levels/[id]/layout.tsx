@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const url = canonical(`/levels/${id}/`);
   const title = `Rotate Rings Level ${id} Walkthrough & Solution`;
-  const description = `Solve Rotate Rings Level ${id} with the complete video walkthrough, board comparison, related levels, and checked written steps when available.`;
+  const description = `Solve Rotate Rings Level ${id} with a complete walkthrough, opening coordinates, ring angles, checked removal order, screenshots, and video.`;
   const image = absoluteImage(getLevelCover(level));
 
   return {
@@ -41,8 +41,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       `Rotate Rings Level ${id}`,
       `Rotate Rings Level ${id} walkthrough`,
       `Rotate Rings Level ${id} solution`,
-      "bus traffic puzzle guide",
-      "sand color matching walkthrough",
+      "interlocking ring puzzle guide",
+      "circle rotation puzzle solution",
     ],
     authors: [{ name: "RotateRings.online Guide Team", url: canonical("/about-us/") }],
     alternates: { canonical: url },
@@ -83,7 +83,9 @@ export default async function LevelLayout({ params, children }: Props) {
         thumbnailUrl: [thumbnail],
         uploadDate: level.videoUploadDate,
         duration: level.videoDurationIso,
-        embedUrl: level.videoUrl,
+        embedUrl: level.sourceStartSecond
+          ? `${level.videoUrl}?start=${level.sourceStartSecond}`
+          : level.videoUrl,
         contentUrl: level.videoId ? `https://www.youtube.com/watch?v=${level.videoId}` : level.videoUrl,
       }
     : undefined;
