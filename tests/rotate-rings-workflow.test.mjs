@@ -121,7 +121,7 @@ test("new site has no copied analytics or advertising account", () => {
 
 test("README stays limited to the site summary and core public URLs", () => {
   const readme = read("README.md");
-  assert.match(readme, /https:\/\/rotaterings\.online\/levels\/1\//);
+  assert.match(readme, /https:\/\/rotaterings\.online\/levels\/level-1\//);
   assert.match(readme, /https:\/\/rotaterings\.online\/#play/);
   assert.doesNotMatch(readme, /Vercel|GitHub|workflow|local-workflow/i);
 });

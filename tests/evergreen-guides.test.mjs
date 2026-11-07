@@ -90,3 +90,16 @@ test("primary navigation links to the evergreen guide library", () => {
   assert.match(read("components/layout/site-navbar.tsx"), /href:\s*["']\/guides\/["']/);
   assert.match(read("components/footer.tsx"), /["']\/guides\/["']/);
 });
+
+test("blog metadata and hero are limited to dated updates and site news", () => {
+  const blog = `${read("app/blog/layout.tsx")}\n${read("components/blog/blog-hero.tsx")}`;
+  assert.match(blog, /Updates & Site News/);
+  assert.match(blog, /Dated updates/);
+  assert.doesNotMatch(blog, /Blog - Guides, Tips & Strategy|Strategy articles|beginner tips|walkthrough notes/);
+});
+
+test("section pages rely on the root main landmark", () => {
+  for (const file of ["app/levels/page.tsx", "app/guides/page.tsx", "app/download/page.tsx"]) {
+    assert.doesNotMatch(read(file), /<\/?main(?:\s|>)/, `${file} must not nest a main landmark`);
+  }
+});

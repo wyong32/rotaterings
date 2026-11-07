@@ -23,7 +23,7 @@ export function OnlineGame() {
         <div className="mx-auto max-w-5xl text-center">
           <p className="text-sm font-bold uppercase text-[#0b7285]">Play in your browser</p>
           <h1 id="play-heading" className="mt-2 text-4xl font-bold leading-tight text-[#17313a] sm:text-5xl">
-            Play Rotate Rings Online <span className="block sm:inline">— Free Browser Puzzle</span>
+            Play Rotate Rings Online <span className="block sm:inline">- Free Browser Puzzle</span>
           </h1>
           <p className="mt-3 flex flex-wrap justify-center gap-x-3 gap-y-1 text-sm font-semibold text-[#435f68]">
             <span>Free browser puzzle</span><span aria-hidden="true">·</span><span>No download</span><span aria-hidden="true">·</span><span>Works on mobile</span>

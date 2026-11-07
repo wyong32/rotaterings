@@ -1,5 +1,12 @@
 import Link from "next/link";
-import { ArrowRight, Layers3, ScanSearch, ShieldCheck } from "lucide-react";
+import { ArrowRight, BookOpen, Layers3, ScanSearch, ShieldCheck } from "lucide-react";
+
+const guideLinks = [
+  ["/guides/how-to-play/", "How to play"],
+  ["/guides/tips/", "Solving tips"],
+  ["/guides/level-numbers-changed/", "Why level numbers change"],
+  ["/guides/where-to-play/", "Where to play"],
+] as const;
 
 export function LevelNavigation() {
   return (
@@ -20,11 +27,18 @@ export function LevelNavigation() {
             <div><Layers3 className="h-7 w-7 text-primary" /><h3 className="mt-3 text-xl font-bold">Use the level library</h3><p className="mt-2 leading-7 text-muted-foreground">Browse only published guides, compare move counts and difficulty, and open the exact board record available today.</p></div>
             <div><ScanSearch className="h-7 w-7 text-[#0b7285]" /><h3 className="mt-3 text-xl font-bold">Use the screenshot finder</h3><p className="mt-2 leading-7 text-muted-foreground">When the number is unreliable, match a local screenshot against the indexed opening-board images without uploading it.</p><Link href="/find-level/" className="mt-3 inline-flex items-center gap-2 font-bold text-primary hover:underline">Find a level by screenshot <ArrowRight className="h-4 w-4" /></Link></div>
             <div><ShieldCheck className="h-7 w-7 text-[#d9480f]" /><h3 className="mt-3 text-xl font-bold">Use verified steps</h3><p className="mt-2 leading-7 text-muted-foreground">Follow the stated direction, piece, and position. If your board does not show the same state after a release, stop and rematch the layout.</p></div>
+            <div>
+              <BookOpen className="h-7 w-7 text-[#7c3aed]" />
+              <h3 className="mt-3 text-xl font-bold">Read the game guides</h3>
+              <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-sm font-bold">
+                {guideLinks.map(([href, label]) => <Link key={href} href={href} className="text-primary hover:underline">{label}</Link>)}
+              </div>
+            </div>
           </div>
         </div>
 
         <div className="mt-10 border-t border-border pt-7">
-          <Link href="/levels/" className="inline-flex items-center gap-2 text-lg font-bold text-primary hover:underline">Browse all 260 level guides <ArrowRight className="h-5 w-5" /></Link>
+          <Link href="/levels/" className="inline-flex items-center gap-2 text-lg font-bold text-primary hover:underline">Browse all published level guides <ArrowRight className="h-5 w-5" /></Link>
         </div>
       </div>
     </section>

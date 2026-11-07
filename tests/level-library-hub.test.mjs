@@ -38,3 +38,14 @@ test("levels hub explains missing numbers and points to screenshot matching", ()
   assert.match(page, /Missing numbers/);
 });
 
+test("levels hub publishes collection, item-list, breadcrumb schema and guide links", () => {
+  assert.match(page, /"@type": "CollectionPage"/);
+  assert.match(page, /"@type": "ItemList"/);
+  assert.match(page, /"@type": "BreadcrumbList"/);
+  assert.match(page, /levels\.map/);
+  assert.doesNotMatch(layout, /levels-schema|CollectionPage|ItemList/);
+  for (const slug of ["how-to-play", "tips", "level-numbers-changed", "where-to-play"]) {
+    assert.match(page, new RegExp(`/guides/${slug}/`));
+  }
+});
+

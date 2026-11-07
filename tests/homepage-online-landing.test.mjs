@@ -31,11 +31,17 @@ test("homepage uses the approved content order without a duplicate Levels 1-10 g
     assert.match(page, new RegExp(`<${component}`));
   }
   assert.doesNotMatch(levelNavigation, /LevelGrid|Rotate Rings Levels 1-/);
-  assert.match(howToPlay, /What a correct release looks like/);
-  assert.match(howToPlay, /What a blocked move looks like/);
+  assert.equal((howToPlay.match(/wrongImage:/g) ?? []).length, 4);
+  assert.equal((howToPlay.match(/correctImage:/g) ?? []).length, 4);
+  assert.equal((howToPlay.match(/wrongCaption:/g) ?? []).length, 4);
+  assert.equal((howToPlay.match(/correctCaption:/g) ?? []).length, 4);
   assert.match(levelHelp, /Find by Screenshot/);
   assert.match(levelHelp, /100.*200/s);
-  assert.match(levelNavigation, /Browse all 260 level guides/);
+  assert.match(levelNavigation, /Browse all published level guides/);
+  assert.doesNotMatch(levelNavigation, /Browse all 260 level guides/);
+  for (const slug of ["how-to-play", "tips", "level-numbers-changed", "where-to-play"]) {
+    assert.match(levelNavigation, new RegExp(`/guides/${slug}/`));
+  }
 });
 
 test("homepage explains browser play, stores, renumbering, and player questions in depth", () => {
@@ -44,7 +50,12 @@ test("homepage explains browser play, stores, renumbering, and player questions 
   assert.ok(words.length >= 1600, `homepage source contains only ${words.length} words`);
   assert.match(storeComparison, /App Store/);
   assert.match(storeComparison, /Google Play/);
-  assert.match(storeComparison, /Yandex Games/);
+  assert.match(storeComparison, /Browser game/);
+  assert.match(storeComparison, /ONLINE_GAME_URL/);
+  assert.doesNotMatch(storeComparison, /yandex\.com\/games\/search/i);
+  for (const image of ["/levels/2/steps/step-1.webp", "/levels/2/steps/step-2.webp", "/levels/6/steps/step-1.webp", "/levels/6/steps/step-2.webp", "/levels/2/steps/step-3.webp"]) {
+    assert.match(howToPlay, new RegExp(image.replaceAll("/", "\\/")));
+  }
   assert.ok((faq.match(/question:/g) ?? []).length >= 6);
   assert.ok((faq.match(/question:/g) ?? []).length <= 8);
   assert.match(site, /store links to the official App Store and Google Play listings/);

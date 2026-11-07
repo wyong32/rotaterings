@@ -21,7 +21,7 @@ export default function GuidesPage() {
         </div>
       </header>
 
-      <main>
+      <div>
         <section className="container mx-auto px-4 py-14 sm:px-6" aria-labelledby="guide-list-heading">
           <h2 id="guide-list-heading" className="text-3xl font-bold">Evergreen Rotate Rings guides</h2>
           <div className="mt-8 grid gap-6 md:grid-cols-2">
@@ -72,7 +72,7 @@ export default function GuidesPage() {
           <h2 className="mt-4 text-3xl font-bold">How these guides differ from the blog</h2>
           <p className="mt-5 leading-7 text-muted-foreground">The guide library contains maintained reference material: rules, strategy, level matching, and platform choices. The blog is reserved for dated game updates and site news. This separation gives each page one clear purpose and prevents an article from competing with a level walkthrough for the same query.</p>
         </section>
-      </main>
+      </div>
       <Footer />
     </div>
   );

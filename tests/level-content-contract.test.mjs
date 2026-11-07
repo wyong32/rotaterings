@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
@@ -71,17 +72,63 @@ test("explicit level selection supports priority ranges and rejects duplicates",
 });
 
 test("batch validation rejects published IDs and incomplete guide records", () => {
-  const level = { ...levels[0], id: "100", title: "Rotate Rings Level 100 Walkthrough" };
-  const guide = structuredClone(guides["1"]);
-
+  const hashAsset = (asset) => crypto.createHash("sha256").update(fs.readFileSync(path.join("public", asset.slice(1)))).digest("hex");
+  const source = structuredClone(levels[0]);
+  const sourceAssets = [...new Set([source.thumbnail, source.coverImage, ...source.guideImages])];
+  const verifiedLevelOne = {
+    ...source,
+    evidence: {
+      levelId: "1",
+      checkedAt: "2026-11-07T00:00:00.000Z",
+      sourceRecordId: "config-level-1-verified",
+      sourceUrl: "https://games.rotaterings.net/game/rotate-rings/index.html?v=20261016",
+      assetSha256: Object.fromEntries(sourceAssets.map((asset) => [asset, hashAsset(asset)])),
+    },
+  };
+  const verifiedGuideOne = {
+    ...structuredClone(guides["1"]),
+    sourceLevelId: "1",
+    sourceEvidenceId: "config-level-1-verified",
+  };
   assert.deepEqual(
     validateBatchRecords({
+      requestedIds: [1],
+      existingLevels: [],
+      existingGuides: {},
+      batchLevels: [verifiedLevelOne],
+      batchGuides: { "1": verifiedGuideOne },
+    }).levels.map((item) => item.id),
+    ["1"],
+  );
+
+  const evidenceId = "config-level-100-verified";
+  const level = {
+    ...levels[0],
+    id: "100",
+    title: "Rotate Rings Level 100 Walkthrough",
+    evidence: {
+      levelId: "100",
+      checkedAt: "2026-11-07T00:00:00.000Z",
+      sourceRecordId: evidenceId,
+      sourceUrl: "https://games.rotaterings.net/game/rotate-rings/index.html?v=20261016",
+      assetSha256: verifiedLevelOne.evidence.assetSha256,
+    },
+  };
+  const guide = {
+    ...structuredClone(guides["1"]),
+    sourceLevelId: "100",
+    sourceEvidenceId: evidenceId,
+  };
+
+  assert.throws(
+    () => validateBatchRecords({
       requestedIds: [100],
       existingLevels: levels,
+      existingGuides: guides,
       batchLevels: [level],
       batchGuides: { "100": guide },
-    }).levels.map((item) => item.id),
-    ["100"],
+    }),
+    /asset must be stored under \/levels\/100\//,
   );
 
   assert.throws(
@@ -96,12 +143,53 @@ test("batch validation rejects published IDs and incomplete guide records", () =
 
   assert.throws(
     () => validateBatchRecords({
-      requestedIds: [100],
-      existingLevels: levels,
-      batchLevels: [level],
-      batchGuides: { "100": { ...guide, commonMistakes: [] } },
+      requestedIds: [1],
+      existingLevels: [],
+      existingGuides: {},
+      batchLevels: [verifiedLevelOne],
+      batchGuides: { "1": { ...verifiedGuideOne, commonMistakes: [] } },
     }),
     /commonMistakes is incomplete/,
   );
+
+  assert.throws(
+    () => validateBatchRecords({
+      requestedIds: [1],
+      existingLevels: [],
+      existingGuides: {},
+      batchLevels: [{ ...verifiedLevelOne, evidence: { ...verifiedLevelOne.evidence, levelId: "100" } }],
+      batchGuides: { "1": verifiedGuideOne },
+    }),
+    /evidence must identify the requested level/,
+  );
+
+  assert.throws(
+    () => validateBatchRecords({
+      requestedIds: [1],
+      existingLevels: [],
+      existingGuides: {},
+      batchLevels: [verifiedLevelOne],
+      batchGuides: { "1": { ...verifiedGuideOne, sourceLevelId: "100" } },
+    }),
+    /sourceLevelId must match/,
+  );
+
+  assert.throws(
+    () => validateBatchRecords({
+      requestedIds: [1],
+      existingLevels: [],
+      existingGuides: {},
+      batchLevels: [verifiedLevelOne],
+      batchGuides: { "1": { ...verifiedGuideOne, beforeMove: [] } },
+    }),
+    /beforeMove is incomplete/,
+  );
+});
+
+test("batch sync stages both data files and rolls back failed writes", () => {
+  assert.match(syncScript, /writeJsonPair/);
+  assert.match(syncScript, /\.temporary/);
+  assert.match(syncScript, /\.backup/);
+  assert.match(syncScript, /fs\.renameSync/);
 });
 

@@ -1,11 +1,13 @@
 import Link from "next/link";
-import { ArrowRight, ScanSearch } from "lucide-react";
+import Script from "next/script";
+import { ArrowRight, BookOpen, ScanSearch } from "lucide-react";
 import { Footer } from "@/components/footer";
 import { LevelLibrary } from "@/components/level/level-library";
 import { getAllLevels } from "@/lib/data";
 import { getVerifiedLevelGuide } from "@/lib/level-guides";
-import { TARGET_LEVEL_COUNT } from "@/lib/level-paths";
+import { levelPath, TARGET_LEVEL_COUNT } from "@/lib/level-paths";
 import { deriveLevelDifficulty } from "@/lib/level-utils";
+import { canonical } from "@/lib/site";
 
 const rangeGuides = [
   {
@@ -39,9 +41,39 @@ export default function LevelsPage() {
   const moveCounts = Object.fromEntries(
     levels.map((level) => [level.id, getVerifiedLevelGuide(level.id)?.stats.verifiedMoveCount ?? 0]),
   );
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": `${canonical("/levels/")}#collection`,
+        name: "Rotate Rings Levels 1-260 Walkthroughs",
+        url: canonical("/levels/"),
+        description: `A verified library of ${levels.length} published Rotate Rings walkthroughs within the planned 1-${TARGET_LEVEL_COUNT} range.`,
+        mainEntity: {
+          "@type": "ItemList",
+          numberOfItems: levels.length,
+          itemListElement: levels.map((level, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            name: level.title,
+            url: canonical(levelPath(level.id)),
+          })),
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: canonical() },
+          { "@type": "ListItem", position: 2, name: "Levels", item: canonical("/levels/") },
+        ],
+      },
+    ],
+  };
 
   return (
     <div>
+      <Script id="levels-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} strategy="beforeInteractive" />
       <header className="border-b border-border bg-[#eaf8fb]">
         <div className="container mx-auto px-4 py-12 sm:px-6">
           <p className="text-sm font-bold uppercase text-[#0b7285]">Verified level library</p>
@@ -50,7 +82,7 @@ export default function LevelsPage() {
         </div>
       </header>
 
-      <main>
+      <div>
         <div className="container mx-auto px-4 py-12 sm:px-6">
           <LevelLibrary levels={levels} moveCounts={moveCounts} />
         </div>
@@ -105,7 +137,24 @@ export default function LevelsPage() {
             </div>
           </div>
         </section>
-      </main>
+
+        <section className="border-t border-border bg-background py-14" aria-labelledby="level-guide-links-heading">
+          <div className="container mx-auto px-4 sm:px-6">
+            <BookOpen className="h-8 w-8 text-primary" />
+            <h2 id="level-guide-links-heading" className="mt-4 text-3xl font-bold">Guides for solving and matching boards</h2>
+            <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {[
+                ["/guides/how-to-play/", "How to play Rotate Rings"],
+                ["/guides/tips/", "Removal-order tips"],
+                ["/guides/level-numbers-changed/", "Why level numbers change"],
+                ["/guides/where-to-play/", "Where to play safely"],
+              ].map(([href, label]) => (
+                <Link key={href} href={href} className="border-t-4 border-primary pt-4 text-lg font-bold text-primary hover:underline">{label} <ArrowRight className="ml-1 inline h-4 w-4" /></Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      </div>
       <Footer />
     </div>
   );

@@ -2,16 +2,16 @@ import type { Metadata } from "next";
 import { canonical, OG_IMAGE, SITE_NAME } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Rotate Rings Blog - Guides, Tips & Strategy",
-  description: "Read Rotate Rings strategy articles about gap alignment, interlocked pieces, removal order, screenshot matching, and level solutions.",
-  keywords: ["Rotate Rings blog", "Rotate Rings guide", "Rotate Rings tips", "ring puzzle strategy", "circle puzzle walkthrough"],
+  title: "Rotate Rings Updates & Site News",
+  description: "Read dated Rotate Rings game updates, version changes, new level coverage notices, and RotateRings.online site news.",
+  keywords: ["Rotate Rings updates", "Rotate Rings news", "Rotate Rings version changes", "RotateRings.online updates"],
   authors: [{ name: "Rotate Rings Guide Team" }],
   openGraph: {
     type: 'website',
     url: canonical("/blog/"),
     siteName: SITE_NAME,
-    title: 'Rotate Rings Blog - Guides, Tips & Strategy',
-    description: 'Read Rotate Rings strategy articles, beginner tips, ring-order notes, and level solutions.',
+    title: 'Rotate Rings Updates & Site News',
+    description: 'Read dated game updates, version changes, level coverage notices, and site news.',
     images: [
       {
         url: OG_IMAGE,
@@ -23,8 +23,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Rotate Rings Blog - Guides, Tips & Strategy',
-    description: 'Read Rotate Rings strategy articles, beginner tips, and walkthrough notes.',
+    title: 'Rotate Rings Updates & Site News',
+    description: 'Read dated Rotate Rings game updates and RotateRings.online site news.',
     images: [OG_IMAGE]
   },
   robots: {

@@ -1,5 +1,5 @@
 import { Apple, ExternalLink, Gamepad2, PlayCircle } from "lucide-react";
-import { APP_STORE_URL, GAME_DEVELOPER, GOOGLE_PLAY_URL, YANDEX_GAMES_URL } from "@/lib/site";
+import { APP_STORE_URL, GAME_DEVELOPER, GOOGLE_PLAY_URL, ONLINE_GAME_URL } from "@/lib/site";
 
 const options = [
   {
@@ -19,12 +19,12 @@ const options = [
     note: "Use this listing for the Android package published under the game's store identity, supported devices, update history, and Google Play reviews.",
   },
   {
-    name: "Yandex Games",
-    href: YANDEX_GAMES_URL,
+    name: "Browser game",
+    href: ONLINE_GAME_URL,
     icon: Gamepad2,
     device: "Desktop and mobile browsers",
-    access: "Search the browser-game catalog",
-    note: "This link opens the Yandex Games search for Rotate Rings. Confirm the title and publisher on the result because catalog availability and regional results can change.",
+    access: "Open the authorized web build",
+    note: "Use the same browser build embedded on this page. It opens without an application download and keeps the game separate from unverified catalog search results.",
   },
 ];
 
@@ -35,7 +35,7 @@ export function StoreComparison() {
         <div className="max-w-3xl">
           <p className="text-sm font-bold uppercase text-[#0b7285]">Mobile and browser access</p>
           <h2 id="where-to-get-heading" className="mt-2 text-3xl font-bold sm:text-4xl">Where to Get Rotate Rings</h2>
-          <p className="mt-4 leading-7 text-muted-foreground">Rotate Rings is associated with {GAME_DEVELOPER}. RotateRings.online does not host an application file. The links below go to store listings or a browser-game catalog, so you can check the publisher, current version, device support, and privacy information before installing or playing. The embedded game at the top of this page remains the fastest option when you want to start without a download.</p>
+          <p className="mt-4 leading-7 text-muted-foreground">Rotate Rings is associated with {GAME_DEVELOPER}. RotateRings.online does not host an application file. The links below go to the authorized browser build or the official App Store and Google Play listings, so you can check the publisher, current version, device support, and privacy information before installing or playing. The embedded game at the top of this page remains the fastest option when you want to start without a download.</p>
         </div>
 
         <div className="mt-8 overflow-x-auto border-y border-border">

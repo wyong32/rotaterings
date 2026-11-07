@@ -2,14 +2,14 @@
   "schemaVersion": 1,
   "fingerprintVersion": "rotaterings-content-v1",
   "siteUrl": "https://rotaterings.online",
-  "generatedAt": "2026-11-07T07:59:46.292Z",
+  "generatedAt": "2026-11-07T08:59:49.018Z",
   "entries": [
     {
       "path": "/",
       "canonicalUrl": "https://rotaterings.online/",
       "indexable": true,
-      "contentFingerprint": "sha256:ed84ed19a9af50ed0db1e020629a4c72626a097cba829c506ed9b87724ff063d",
-      "lastModified": "2026-11-07T07:59:46.292Z",
+      "contentFingerprint": "sha256:85e30be9eb016186b6a173827b9097b4bbf764931d467c777a69dcf1a02f951d",
+      "lastModified": "2026-11-07T08:54:18.707Z",
       "changeFrequency": "weekly",
       "priority": 1
     },
@@ -26,8 +26,8 @@
       "path": "/blog/",
       "canonicalUrl": "https://rotaterings.online/blog/",
       "indexable": true,
-      "contentFingerprint": "sha256:66f8f36a04d82bd7341e5b1b394096738c56e1a4f9fb03a0674e447fe986e402",
-      "lastModified": "2026-11-07T07:59:46.292Z",
+      "contentFingerprint": "sha256:7d621039128514a4e5a74368ea7dc3772e33b31c6ef367ca83974dce3a0397cf",
+      "lastModified": "2026-11-07T08:41:02.192Z",
       "changeFrequency": "weekly",
       "priority": 0.9
     },
@@ -44,8 +44,8 @@
       "path": "/download/",
       "canonicalUrl": "https://rotaterings.online/download/",
       "indexable": true,
-      "contentFingerprint": "sha256:4059bab11a79921435e4dd554a014b297037f42650e77e0cad82c1675a61045a",
-      "lastModified": "2026-11-07T07:59:46.292Z",
+      "contentFingerprint": "sha256:0c116e3fa9a7345ba780eadc4068299a8de66bc6c72f9f2b18fd9223d3205bad",
+      "lastModified": "2026-11-07T08:41:02.192Z",
       "changeFrequency": "monthly",
       "priority": 0.8
     },
@@ -62,8 +62,8 @@
       "path": "/guides/",
       "canonicalUrl": "https://rotaterings.online/guides/",
       "indexable": true,
-      "contentFingerprint": "sha256:d46b7e37892c61280b27793e5938e8be111707a401775a62139677b60ce1f183",
-      "lastModified": "2026-11-07T00:00:00.000Z",
+      "contentFingerprint": "sha256:ab032f97e7e593ef7021c476c275715953fa86bcbe7dad4931cb026fe80ac9f5",
+      "lastModified": "2026-11-07T08:41:02.192Z",
       "changeFrequency": "monthly",
       "priority": 0.8
     },
@@ -98,8 +98,8 @@
       "path": "/guides/where-to-play/",
       "canonicalUrl": "https://rotaterings.online/guides/where-to-play/",
       "indexable": true,
-      "contentFingerprint": "sha256:93c81576ebb0ea3ae176a7d4f57f9c450f7cef17f7d77406172a240a54612f7c",
-      "lastModified": "2026-11-07T00:00:00.000Z",
+      "contentFingerprint": "sha256:637c0a457d2f2ff62bcc3956110bda7a2ad276251de3191251cb41c385f99648",
+      "lastModified": "2026-11-07T08:41:02.192Z",
       "changeFrequency": "monthly",
       "priority": 0.7
     },
@@ -107,8 +107,8 @@
       "path": "/levels/",
       "canonicalUrl": "https://rotaterings.online/levels/",
       "indexable": true,
-      "contentFingerprint": "sha256:3323c87c195313f1eb7e49bdf53243034bd079d4490791a8823ccecf737e6ec5",
-      "lastModified": "2026-11-07T07:59:46.292Z",
+      "contentFingerprint": "sha256:93265caf6253dc09f5b955a25012faffd4447a81b6fa6dbfc3310d758d0187b8",
+      "lastModified": "2026-11-07T08:42:50.812Z",
       "changeFrequency": "weekly",
       "priority": 0.9
     },

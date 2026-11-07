@@ -267,9 +267,9 @@ export const guides: EvergreenGuide[] = [
         ],
       },
       {
-        heading: "Treat web platform search results as discovery links",
+        heading: "Use the documented browser source",
         paragraphs: [
-          "The download page may include a Yandex Games search link for Rotate Rings. It is a discovery link, not a claim that every result is published by the same developer or uses the same build. Review the result title, publisher information, permissions, and host before playing. Do not enter store credentials into an unrelated game page.",
+          "The browser option in the comparison table opens the same authorized web build used by the homepage embed. This avoids sending players to a catalog search where several games can share similar names. Open the documented source, then compare the complete board with the guide before following a numbered solution.",
           "Third-party web listings can change or disappear. For the stable choices documented here, use the authorized homepage embed or the official Apple and Google marketplace listings. The guide site does not mirror mobile installation files.",
         ],
       },

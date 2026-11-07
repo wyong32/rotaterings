@@ -21,7 +21,7 @@ export default function DownloadPage() {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-14 sm:px-6">
+      <div className="container mx-auto px-4 py-14 sm:px-6">
         <section className="grid gap-8 border-b border-border pb-12 sm:grid-cols-3">
           <div><p className="text-sm font-bold uppercase text-muted-foreground">Developer</p><p className="mt-2 text-xl font-bold">{GAME_DEVELOPER}</p></div>
           <div><p className="text-sm font-bold uppercase text-muted-foreground">Downloads</p><p className="mt-2 text-xl font-bold">{DOWNLOAD_COUNT}</p></div>
@@ -36,7 +36,7 @@ export default function DownloadPage() {
           <h2 className="mt-12 text-3xl font-bold">Store Link Notice</h2>
           <p className="mt-4 leading-7 text-muted-foreground">The buttons above open the official App Store and Google Play pages. RotateRings.online does not host the application file and is not affiliated with the developer.</p>
         </section>
-      </main>
+      </div>
       <Footer />
     </div>
   );
