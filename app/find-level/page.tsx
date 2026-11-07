@@ -1,9 +1,35 @@
 import Script from "next/script";
+import Link from "next/link";
 import { ScanSearch, ShieldCheck, Shuffle, SlidersHorizontal } from "lucide-react";
 import { ScreenshotFinder } from "@/components/finder/screenshot-finder";
 import { Footer } from "@/components/footer";
-import { MAX_LEVEL } from "@/lib/level-utils";
+import { getAllLevels } from "@/lib/data";
 import { canonical, SITE_NAME, SITE_URL } from "@/lib/site";
+
+// FINDER_GUIDE_COPY_START
+const finderGuideSections = [
+  {
+    heading: "Why the number can change",
+    copy: "Rotate Rings level numbers are not permanent board identifiers. A game update can insert a tutorial, move an existing stage, replace one puzzle, or deliver a different sequence to another platform. Level 120 on one device can therefore show a board that an older video labels with another number. This does not automatically make the walkthrough wrong. It means you should compare the untouched opening board before following any move. Ring positions, gap directions, rails, frames, and clamps provide stronger evidence than the number shown at the top of the game.",
+  },
+  {
+    heading: "Prepare a useful screenshot",
+    copy: "Restart the puzzle and capture the complete opening state. Keep every ring, visible gap, fixed support, clamp, and board edge in the image. Do not crop tightly around only the center because outer pieces often distinguish two similar layouts. Avoid screenshots taken after several removals or rotations. Those actions change the features used for comparison. A clear portrait screenshot from the start of the level usually gives the strongest result. PNG, JPEG, and WebP files up to 12 MB are accepted, and the crop controls can isolate the board when the surrounding interface is large.",
+  },
+  {
+    heading: "How the local comparison works",
+    copy: "The tool reads the selected image in your browser and compares visual descriptors with processed opening images from published guides. It checks broad color distribution, edges, and board shape, then returns up to five candidates. Your original screenshot is not uploaded, saved, or added to the page address. The result is a shortlist, not an automatic proof. Open a candidate and confirm the ring count, coordinates, starting gaps, and non-ring objects before using its removal order. Similar colors alone are not enough because two boards can reuse the same palette with different connections.",
+  },
+  {
+    heading: "Understand the current limits",
+    copy: "The finder searches only boards that already have verified walkthroughs and processed matching images on this site. It cannot identify an unpublished level, a board hidden by a pop-up, or a heavily changed state with most pieces removed. Low confidence can also result from a narrow crop, blur, animation effects, or a screenshot that includes too much empty interface. Try the complete opening image first, then adjust the horizontal position, vertical position, and zoom. If no candidate matches the board facts, use the level library or keep the screenshot until that board is published.",
+  },
+  {
+    heading: "Confirm the guide before making a move",
+    copy: "Treat the top result as a lead. Compare the full opening image and the board-data table on the guide page. Count the rings, locate repeated colors by position, and check every rail or clamp. The first solution step should name a piece that exists in the stated coordinate and has the described exit. If those facts disagree, return to the results and inspect another candidate. When the board matches but your displayed number differs, follow the visual guide and save its canonical link. Read the level-number guide for a detailed explanation of reordering and reporting a real mismatch.",
+  },
+];
+// FINDER_GUIDE_COPY_END
 
 const faqs = [
   {
@@ -25,6 +51,7 @@ const faqs = [
 ];
 
 export default function FindLevelPage() {
+  const publishedLevelCount = getAllLevels().length;
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -108,6 +135,27 @@ export default function FindLevelPage() {
         </div>
       </section>
 
+      <section className="border-b border-border bg-background" aria-labelledby="finder-guide-heading">
+        <div className="container mx-auto px-4 py-12 sm:px-6">
+          <div className="max-w-3xl">
+            <p className="text-sm font-bold uppercase text-primary">Match the board, then verify it</p>
+            <h2 id="finder-guide-heading" className="mt-2 text-3xl font-bold text-foreground">How to find the same puzzle after level numbers change</h2>
+          </div>
+          <div className="mt-8 grid gap-x-12 gap-y-8 lg:grid-cols-2">
+            {finderGuideSections.map((section) => (
+              <article key={section.heading} className="border-t border-border pt-5">
+                <h3 className="text-xl font-bold text-foreground">{section.heading}</h3>
+                <p className="mt-3 leading-7 text-muted-foreground">{section.copy}</p>
+              </article>
+            ))}
+          </div>
+          <div className="mt-9 flex flex-wrap gap-4 border-l-4 border-[#0b7285] bg-[#eaf8fb] p-5">
+            <Link href="/levels/" className="font-bold text-primary hover:underline">Browse the verified level library</Link>
+            <Link href="/guides/level-numbers-changed/" className="font-bold text-primary hover:underline">Read why level numbers change</Link>
+          </div>
+        </div>
+      </section>
+
       <section className="border-b border-border bg-background">
         <div className="container mx-auto grid gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(280px,0.6fr)]">
           <div>
@@ -125,7 +173,7 @@ export default function FindLevelPage() {
             <SlidersHorizontal className="h-6 w-6 text-primary" />
             <h2 className="mt-3 text-xl font-bold text-foreground">Current coverage</h2>
             <p className="mt-2 text-sm leading-7 text-muted-foreground">
-              The finder compares screenshots with processed Levels 1-{MAX_LEVEL}. Results outside that set can be inaccurate until more verified boards are added.
+              The finder currently compares your screenshot with {publishedLevelCount} published opening boards. It does not search the full planned 1-260 library until those boards are verified and processed.
             </p>
           </aside>
         </div>
