@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { getAllLevels, getLevelById, getLevelCover } from "@/lib/data";
 import { getLevelFaqs, getVerifiedLevelGuide } from "@/lib/level-guides";
-import { canonical, GAME_NAME, LAST_SITE_UPDATE, SITE_NAME, SITE_URL } from "@/lib/site";
+import { getLevelPageDescription, getLevelPageTitle } from "@/lib/level-metadata";
+import { levelPath, parseLevelSlug } from "@/lib/level-paths";
+import { canonical, GAME_NAME, SITE_NAME, SITE_URL } from "@/lib/site";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -14,14 +16,17 @@ function absoluteImage(source: string) {
 }
 
 export async function generateStaticParams() {
-  return getAllLevels().map((level) => ({ id: level.id }));
+  return getAllLevels().map((level) => ({
+    id: levelPath(level.id).split("/").filter(Boolean).at(-1),
+  }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params;
-  const level = getLevelById(id);
+  const { id: slug } = await params;
+  const id = parseLevelSlug(slug);
+  const level = id ? getLevelById(id) : undefined;
 
-  if (!level) {
+  if (!id || !level) {
     return {
       title: "Rotate Rings Level Not Found",
       description: "The requested Rotate Rings level guide could not be found.",
@@ -29,9 +34,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const url = canonical(`/levels/${id}/`);
-  const title = `Rotate Rings Level ${id} Walkthrough & Solution`;
-  const description = `Solve Rotate Rings Level ${id} with a complete walkthrough, opening coordinates, ring angles, checked removal order, screenshots, and video.`;
+  const url = canonical(levelPath(id));
+  const title = getLevelPageTitle(id);
+  const description = getLevelPageDescription(id);
   const image = absoluteImage(getLevelCover(level));
 
   return {
@@ -52,8 +57,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: SITE_NAME,
       title,
       description,
-      publishedTime: LAST_SITE_UPDATE,
-      modifiedTime: LAST_SITE_UPDATE,
+      publishedTime: level.publishedAt,
+      modifiedTime: level.modifiedAt,
       images: [{ url: image, width: 600, height: 500, alt: `Rotate Rings Level ${id} board and walkthrough` }],
     },
     twitter: { card: "summary_large_image", title, description, images: [image] },
@@ -66,11 +71,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function LevelLayout({ params, children }: Props) {
-  const { id } = await params;
-  const level = getLevelById(id);
-  if (!level) return children;
+  const { id: slug } = await params;
+  const id = parseLevelSlug(slug);
+  const level = id ? getLevelById(id) : undefined;
+  if (!id || !level) return children;
 
-  const url = canonical(`/levels/${id}/`);
+  const url = canonical(levelPath(id));
+  const title = getLevelPageTitle(id);
   const guide = getVerifiedLevelGuide(id);
   const faqs = getLevelFaqs(id, guide);
   const thumbnail = absoluteImage(getLevelCover(level));
@@ -78,14 +85,12 @@ export default async function LevelLayout({ params, children }: Props) {
     ? {
         "@type": "VideoObject",
         "@id": `${url}#video`,
-        name: `Rotate Rings Level ${id} Walkthrough Solution`,
+        name: `${title} Video`,
         description: `Complete gameplay solution for Rotate Rings Level ${id}.`,
         thumbnailUrl: [thumbnail],
         uploadDate: level.videoUploadDate,
         duration: level.videoDurationIso,
-        embedUrl: level.sourceStartSecond
-          ? `${level.videoUrl}?start=${level.sourceStartSecond}`
-          : level.videoUrl,
+        embedUrl: level.sourceStartSecond ? `${level.videoUrl}?start=${level.sourceStartSecond}` : level.videoUrl,
         contentUrl: level.videoId ? `https://www.youtube.com/watch?v=${level.videoId}` : level.videoUrl,
       }
     : undefined;
@@ -96,11 +101,11 @@ export default async function LevelLayout({ params, children }: Props) {
       {
         "@type": "Article",
         "@id": `${url}#article`,
-        headline: `Rotate Rings Level ${id} Walkthrough and Solution`,
-        description: guide?.quickAnswer || `Complete video solution and board guide for Rotate Rings Level ${id}.`,
+        headline: title,
+        description: guide?.quickAnswer || getLevelPageDescription(id),
         image: [thumbnail],
-        datePublished: LAST_SITE_UPDATE,
-        dateModified: LAST_SITE_UPDATE,
+        datePublished: level.publishedAt,
+        dateModified: level.modifiedAt,
         mainEntityOfPage: url,
         author: { "@type": "Organization", name: "RotateRings.online Guide Team", url: canonical("/about-us/") },
         publisher: { "@type": "Organization", name: SITE_NAME, url: canonical() },
@@ -110,11 +115,7 @@ export default async function LevelLayout({ params, children }: Props) {
       {
         "@type": "FAQPage",
         "@id": `${url}#faq`,
-        mainEntity: faqs.map((faq) => ({
-          "@type": "Question",
-          name: faq.question,
-          acceptedAnswer: { "@type": "Answer", text: faq.answer },
-        })),
+        mainEntity: faqs.map((faq) => ({ "@type": "Question", name: faq.question, acceptedAnswer: { "@type": "Answer", text: faq.answer } })),
       },
       {
         "@type": "BreadcrumbList",
@@ -130,12 +131,7 @@ export default async function LevelLayout({ params, children }: Props) {
 
   return (
     <>
-      <Script
-        id={`level-${id}-schema`}
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        strategy="beforeInteractive"
-      />
+      <Script id={`level-${id}-schema`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} strategy="beforeInteractive" />
       {children}
     </>
   );

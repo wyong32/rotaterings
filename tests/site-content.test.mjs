@@ -26,10 +26,11 @@ test("public content describes ring mechanics rather than the old bus template",
 
 test("level pages expose board data, removal order, related guides, and source transparency", () => {
   const page = read("app/levels/[id]/page.tsx");
+  const nearby = read("components/level/nearby-levels.tsx");
 
   assert.match(page, /boardData/);
   assert.match(page, /removalOrder/);
   assert.match(page, /sourceNote/);
-  assert.match(page, /More Rotate Rings Levels/);
+  assert.match(nearby, /Continue with a published guide/);
   assert.match(page, /Video Walkthrough/);
 });

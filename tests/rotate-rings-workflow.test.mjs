@@ -29,6 +29,11 @@ test("public routes and metadata belong to rotaterings.online", () => {
 
 test("level template exposes practical board and move data without video timestamps", () => {
   const page = read("app/levels/[id]/page.tsx");
+  const components = [
+    "components/level/level-step-guide.tsx",
+    "components/level/nearby-levels.tsx",
+  ].map(read).join("\n");
+  const template = `${page}\n${components}`;
   for (const text of [
     "Opening Board Data",
     "Coordinates",
@@ -36,9 +41,9 @@ test("level template exposes practical board and move data without video timesta
     "Verified Removal Order",
     "Board State by Phase",
     "Step-by-Step Solution",
-    "Where Players Get Stuck",
-    "More Rotate Rings Levels",
-  ]) assert.match(page, new RegExp(text));
+    "Where players get stuck",
+    "Continue with a published guide",
+  ]) assert.match(template, new RegExp(text));
 
   assert.doesNotMatch(page, /Video checkpoint|timestamp|FRAME-VERIFIED|How This Guide Was Verified/i);
   assert.match(page, /guide\.boardData\.rings/);
