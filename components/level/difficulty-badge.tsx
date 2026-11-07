@@ -14,11 +14,19 @@ const difficultyColors = {
   Expert: "bg-red-100 text-red-800 border-red-200",
 };
 
+const difficultyLabels = {
+  Easy: "Easy: few constraints",
+  Medium: "Medium: several linked pieces",
+  Hard: "Hard: supports or dense links",
+  Expert: "Expert: many moves and constraints",
+};
+
 export function DifficultyBadge({ difficulty, className }: DifficultyBadgeProps) {
   return (
     <Badge
       variant="outline"
       className={cn(difficultyColors[difficulty], className)}
+      title={difficultyLabels[difficulty]}
     >
       {difficulty}
     </Badge>

@@ -2,15 +2,15 @@ import type { Metadata } from "next";
 import { canonical, gameDescription, OG_IMAGE, SITE_NAME } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Rotate Rings Levels Walkthroughs & Solutions",
-  description: "Browse Rotate Rings level walkthroughs with complete videos, full-board screenshots, ring coordinates, and checked removal orders.",
+  title: "Rotate Rings Levels 1-260 Walkthroughs & Solutions",
+  description: "Browse verified Rotate Rings Levels 1-260 walkthroughs with full-board screenshots, ring coordinates, move counts, difficulty, and checked removal orders.",
   keywords: ["Rotate Rings levels", "Rotate Rings walkthrough", "Rotate Rings solutions", "ring puzzle guide", "circle puzzle solution", "spatial logic"],
   authors: [{ name: "Rotate Rings Guide Team" }],
   openGraph: {
     type: 'website',
     url: canonical("/levels/"),
     siteName: SITE_NAME,
-    title: 'Rotate Rings Levels Walkthroughs & Solutions',
+    title: 'Rotate Rings Levels 1-260 Walkthroughs & Solutions',
     description: gameDescription,
     images: [
       {
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Rotate Rings Levels Walkthroughs & Solutions',
+    title: 'Rotate Rings Levels 1-260 Walkthroughs & Solutions',
     description: 'Browse Rotate Rings level videos, board images, ring coordinates, and removal-order solutions.',
     images: [OG_IMAGE]
   },

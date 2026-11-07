@@ -4,13 +4,15 @@ import { Level } from "@/types";
 import { cn } from "@/lib/utils";
 import { getLevelCover } from "@/lib/data";
 import { levelPath } from "@/lib/level-paths";
+import { DifficultyBadge } from "./difficulty-badge";
 
 interface LevelCardProps {
   level: Level;
+  verifiedMoveCount?: number;
   className?: string;
 }
 
-export function LevelCard({ level, className }: LevelCardProps) {
+export function LevelCard({ level, verifiedMoveCount, className }: LevelCardProps) {
   return (
     <Link href={levelPath(level.id)} className={cn("group block w-full", className)}>
       <div className="relative w-full max-w-[274px] mx-auto overflow-hidden rounded-lg border border-border bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
@@ -25,10 +27,14 @@ export function LevelCard({ level, className }: LevelCardProps) {
           />
         </div>
 
-        <div className="flex min-h-14 items-center justify-center bg-white px-3 py-3">
-          <h3 className="font-semibold text-[#5C4D3C] text-sm sm:text-base text-center group-hover:text-[#E89654] transition-colors line-clamp-2">
-            {level.title || `Rotate Rings Level ${level.id}`}
+        <div className="min-h-[104px] bg-white px-3 py-3">
+          <h3 className="line-clamp-2 text-center text-sm font-semibold text-[#5C4D3C] transition-colors group-hover:text-[#b93d0d] sm:text-base">
+            Rotate Rings Level {level.id}
           </h3>
+          <div className="mt-3 flex items-center justify-center gap-2 text-xs text-muted-foreground">
+            <DifficultyBadge difficulty={level.difficulty} className="rounded-sm" />
+            {verifiedMoveCount ? <span>{verifiedMoveCount} verified moves</span> : null}
+          </div>
         </div>
       </div>
     </Link>

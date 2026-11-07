@@ -53,8 +53,9 @@ test("shared level links use the canonical helper instead of rebuilding URLs", (
   const files = [
     "components/layout/site-navbar.tsx",
     "components/footer.tsx",
-    "components/home/hero-section.tsx",
+    "components/home/level-help.tsx",
     "components/level/level-card.tsx",
+    "components/level/level-library.tsx",
     "components/level/level-grid.tsx",
     "components/level/level-search.tsx",
     "components/finder/finder-results.tsx",

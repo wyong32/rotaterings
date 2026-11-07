@@ -80,8 +80,10 @@ test("homepage includes free online play and three complete gameplay screenshots
   const home = read("app/page.tsx");
   const online = read("components/home/online-game.tsx");
   const hero = read("components/home/hero-section.tsx");
+  const site = read("lib/site.ts");
   assert.match(home, /<OnlineGame/);
-  assert.match(online, /games\.rotaterings\.net\/game\/rotate-rings\/index\.html\?v=20261016/);
+  assert.match(site, /games\.rotaterings\.net\/game\/rotate-rings\/index\.html\?v=20261016/);
+  assert.match(online, /ONLINE_GAME_URL/);
   assert.match(online, /allowFullScreen/);
   for (const level of [2, 6, 10]) assert.match(hero, new RegExp(`rotate-rings-level-${level}\\.webp`));
   assert.match(hero, /object-contain/);

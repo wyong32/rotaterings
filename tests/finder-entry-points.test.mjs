@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const navbarPath = new URL("../components/layout/site-navbar.tsx", import.meta.url);
-const heroPath = new URL("../components/home/hero-section.tsx", import.meta.url);
+const levelHelpPath = new URL("../components/home/level-help.tsx", import.meta.url);
 
 test("desktop and mobile navigation expose the screenshot finder", async () => {
   const source = await readFile(navbarPath, "utf8");
@@ -15,10 +15,10 @@ test("desktop and mobile navigation expose the screenshot finder", async () => {
 });
 
 test("homepage exposes a compact screenshot finder entry beside level search", async () => {
-  const source = await readFile(heroPath, "utf8");
+  const source = await readFile(levelHelpPath, "utf8");
 
   assert.match(source, /href="\/find-level\/"/);
   assert.match(source, /Find by Screenshot/);
-  assert.match(source, /level numbers (?:change|differ|move|are reordered)/i);
+  assert.match(source, /updates can (?:move|reorder)/i);
   assert.match(source, /ScanSearch/);
 });

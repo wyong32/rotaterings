@@ -1,4 +1,6 @@
 import levelsData from "@/data/levels.json";
+import type { VerifiedLevelGuide } from "@/lib/level-guides";
+import type { Difficulty } from "@/types";
 
 export type LevelRange = {
   start: number;
@@ -20,6 +22,22 @@ export const MAX_LEVEL = levelsData.reduce((max, level) => {
 }, 0);
 
 export const TOTAL_GUIDES = levelsData.length;
+
+export function deriveLevelDifficulty(
+  guide: Pick<VerifiedLevelGuide, "stats" | "boardData">,
+): Difficulty {
+  const highestLinkCount = Math.max(0, ...guide.boardData.rings.map((ring) => ring.linkedPoints));
+  const score =
+    guide.stats.verifiedMoveCount +
+    guide.stats.supportCount +
+    guide.stats.clampCount +
+    highestLinkCount;
+
+  if (score <= 5) return "Easy";
+  if (score <= 12) return "Medium";
+  if (score <= 20) return "Hard";
+  return "Expert";
+}
 
 export const DEFAULT_TEN_LEVEL_RANGE: LevelRange = {
   start: 1,
