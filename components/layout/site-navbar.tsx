@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { MAX_LEVEL } from "@/lib/level-utils";
 import { GAME_NAME } from "@/lib/site";
 import { getLevelById } from "@/lib/data";
+import { levelPath } from "@/lib/level-paths";
 
 export function SiteNavbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -22,7 +23,7 @@ export function SiteNavbar() {
     e.preventDefault();
     const levelNum = parseInt(searchValue);
     if (levelNum >= 1 && levelNum <= MAX_LEVEL && getLevelById(String(levelNum))) {
-      router.push(`/levels/${levelNum}`);
+      router.push(levelPath(levelNum));
       setSearchValue("");
     }
   };

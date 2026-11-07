@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { searchLevels } from "@/lib/data";
 import { DifficultyBadge } from "./difficulty-badge";
+import { levelPath } from "@/lib/level-paths";
 
 interface LevelSearchProps {
   open: boolean;
@@ -25,7 +26,7 @@ export function LevelSearch({ open, onOpenChange }: LevelSearchProps) {
   const results = query.length > 0 ? searchLevels(query) : [];
 
   const handleSelect = (levelId: string) => {
-    router.push(`/levels/${levelId}`);
+    router.push(levelPath(levelId));
     onOpenChange(false);
     setQuery("");
   };

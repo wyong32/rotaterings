@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { GAME_DEVELOPER, GAME_NAME, SITE_NAME } from "@/lib/site";
+import { levelPath } from "@/lib/level-paths";
 
 const popularLevels = [1, 2, 4, 5, 7, 8, 9, 10];
 const guideLevels = [1, 3, 4, 6, 7, 8, 9, 10];
@@ -61,7 +62,7 @@ export function Footer() {
             <ul className="space-y-3">
               {popularLevels.map((level) => (
                 <li key={level}>
-                  <Link href={`/levels/${level}/`} className="text-sm text-muted-foreground hover:text-primary hover:underline">
+                  <Link href={levelPath(level)} className="text-sm text-muted-foreground hover:text-primary hover:underline">
                     Rotate Rings Level {level}
                   </Link>
                 </li>
@@ -74,7 +75,7 @@ export function Footer() {
             <ul className="space-y-3">
               {guideLevels.map((level) => (
                 <li key={level}>
-                  <Link href={`/levels/${level}/`} className="text-sm text-muted-foreground hover:text-primary hover:underline">
+                  <Link href={levelPath(level)} className="text-sm text-muted-foreground hover:text-primary hover:underline">
                     Level {level} Walkthrough
                   </Link>
                 </li>

@@ -7,6 +7,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight, CircleDot, ScanSearch, Search, Workflow } from "lucide-react";
 import { getLevelById } from "@/lib/data";
 import { MAX_LEVEL } from "@/lib/level-utils";
+import { levelPath } from "@/lib/level-paths";
 
 const gameplayImages = [
   {
@@ -43,7 +44,7 @@ export function HeroSection() {
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const value = String(Number.parseInt(level, 10));
-    if (getLevelById(value)) router.push(`/levels/${value}/`);
+    if (getLevelById(value)) router.push(levelPath(value));
   }
 
   return (

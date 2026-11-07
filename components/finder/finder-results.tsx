@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Crop } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getLevelById, getLevelCover } from "@/lib/data";
+import { levelPath } from "@/lib/level-paths";
 
 export interface FinderMatch {
   levelId: string;
@@ -67,7 +68,7 @@ export function FinderResults({ results, onAdjustCrop }: FinderResultsProps) {
                 <p className="text-xs font-semibold uppercase text-primary">{confidenceLabels[result.confidence]}</p>
                 <h3 className="mt-1 text-base font-bold text-foreground">Rotate Rings Level {result.levelId}</h3>
                 <Link
-                  href={`/levels/${result.levelId}/`}
+                  href={levelPath(result.levelId)}
                   className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
                 >
                   View walkthrough

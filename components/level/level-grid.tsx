@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Level } from "@/types";
 import { formatLevelDisplay, parseLevelNumber } from "@/lib/level-utils";
 import { LevelCard } from "./level-card";
+import { levelPath } from "@/lib/level-paths";
 
 interface LevelGridProps {
   levels: Level[];
@@ -28,7 +29,7 @@ export function LevelGrid({ levels, variant = "card" }: LevelGridProps) {
         {sortedLevels.map((level) => (
           <Link
             key={level.id}
-            href={`/levels/${level.id}`}
+            href={levelPath(level.id)}
             className="flex items-center justify-center h-10 sm:h-12 rounded-lg border border-border bg-card hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all font-semibold text-sm sm:text-base shadow-sm hover:shadow-md"
           >
             {formatLevelDisplay(level.id)}
