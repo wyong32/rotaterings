@@ -10,6 +10,21 @@ const nextConfig: NextConfig = {
         destination: "/levels/level-:id/",
         permanent: true,
       },
+      {
+        source: "/blog/how-to-play-rotate-rings/",
+        destination: "/guides/how-to-play/",
+        permanent: true,
+      },
+      {
+        source: "/blog/rotate-rings-removal-order-strategy/",
+        destination: "/guides/tips/",
+        permanent: true,
+      },
+      {
+        source: "/blog/find-rotate-rings-level-by-screenshot/",
+        destination: "/guides/level-numbers-changed/",
+        permanent: true,
+      },
     ];
   },
   images: {

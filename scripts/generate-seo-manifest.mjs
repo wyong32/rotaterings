@@ -49,7 +49,9 @@ const guides = readJson("data/level-guides.json");
 const matchIndex = readJson("public/data/level-match-index.json");
 const blogSource = read("data/blog-posts.ts");
 const blogSlugs = [...blogSource.matchAll(/\bslug:\s*["']([^"']+)["']/g)].map((match) => match[1]);
-if (blogSlugs.length === 0) throw new Error("No published blog slugs found in data/blog-posts.ts");
+const evergreenGuideSource = read("data/guides.ts");
+const evergreenGuideSlugs = [...evergreenGuideSource.matchAll(/\bslug:\s*["']([^"']+)["']/g)].map((match) => match[1]);
+if (evergreenGuideSlugs.length !== 4) throw new Error("Expected four evergreen guide slugs in data/guides.ts");
 
 const shared = sourceBundle([
   "app/layout.tsx",
@@ -76,6 +78,7 @@ const entries = [
   entry("/", [sourceBundle(["app/page.tsx", ...filesUnder("components/home")]), levels], "daily", 1),
   entry("/levels/", [sourceBundle(["app/levels/page.tsx", "app/levels/layout.tsx"]), levels], "weekly", 0.9),
   entry("/find-level/", [sourceBundle(["app/find-level/page.tsx", "app/find-level/layout.tsx", ...filesUnder("components/finder")]), matchIndex], "weekly", 0.9),
+  entry("/guides/", [sourceBundle(["app/guides/page.tsx", "app/guides/layout.tsx"]), evergreenGuideSource], "monthly", 0.8),
   entry("/blog/", [sourceBundle(["app/blog/page.tsx", "app/blog/layout.tsx"]), blogSource], "daily", 0.9),
   entry("/download/", sourceBundle(["app/download/page.tsx", "app/download/layout.tsx"]), "monthly", 0.8),
   entry("/about-us/", sourceBundle(["app/about-us/page.tsx", "app/about-us/layout.tsx"]), "monthly", 0.5),
@@ -91,12 +94,17 @@ for (const level of levels) {
     .sort((left, right) => Math.abs(Number(left.id) - Number(level.id)) - Math.abs(Number(right.id) - Number(level.id)))
     .slice(0, 8)
     .map(({ id, coverImage, title }) => ({ id, coverImage, title }));
-  entries.push(entry(`/levels/${level.id}/`, [levelTemplate, level, guides[level.id], related], "weekly", 0.8));
+  entries.push(entry(`/levels/level-${level.id}/`, [levelTemplate, level, guides[level.id], related], "weekly", 0.8));
 }
 
 const blogTemplate = sourceBundle(["app/blog/[slug]/page.tsx", "app/blog/[slug]/layout.tsx"]);
 for (const slug of blogSlugs) {
   entries.push(entry(`/blog/${slug}/`, [blogTemplate, blogSource, slug], "monthly", 0.7));
+}
+
+const evergreenGuideTemplate = sourceBundle(["app/guides/[slug]/page.tsx", "app/guides/[slug]/layout.tsx"]);
+for (const slug of evergreenGuideSlugs) {
+  entries.push(entry(`/guides/${slug}/`, [evergreenGuideTemplate, evergreenGuideSource, slug], "monthly", 0.7));
 }
 
 entries.sort((left, right) => left.canonicalUrl.localeCompare(right.canonicalUrl));

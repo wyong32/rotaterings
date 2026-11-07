@@ -36,6 +36,7 @@ export function Footer() {
               {[
                 ["/", "Home"],
                 ["/levels/", "Level Solutions"],
+                ["/guides/", "Game Guides"],
                 ["/find-level/", "Find by Screenshot"],
                 ["/blog/", "Blog"],
                 ["/download/", "Download"],

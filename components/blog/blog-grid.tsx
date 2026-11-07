@@ -12,6 +12,20 @@ interface BlogGridProps {
 export function BlogGrid({ selectedCategory }: BlogGridProps) {
   const blogPosts = getBlogPostsByCategory(selectedCategory);
 
+  if (blogPosts.length === 0) {
+    return (
+      <section className="container mx-auto max-w-3xl px-6 pb-16">
+        <div className="border-l-4 border-primary bg-card p-7">
+          <h2 className="text-2xl font-bold text-foreground">No dated updates yet</h2>
+          <p className="mt-3 leading-7 text-muted-foreground">This blog is reserved for game updates and site news. Rules, strategy, level matching, and platform information are maintained in the guide library.</p>
+          <Link href="/guides/" className="mt-5 inline-flex items-center gap-2 font-semibold text-primary hover:underline">
+            Browse Rotate Rings guides <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="container mx-auto px-6 pb-16">
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">

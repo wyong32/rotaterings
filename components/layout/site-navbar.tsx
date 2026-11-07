@@ -39,6 +39,7 @@ export function SiteNavbar() {
   const navItems = [
     { href: "/", label: "Home", icon: Home },
     { href: "/levels", label: "Levels", icon: Play },
+    { href: "/guides/", label: "Guides", icon: BookOpen },
     { href: "/find-level/", label: "Find Level", icon: ScanSearch },
     { href: "/blog", label: "Blog", icon: BookOpen },
     { href: "/download", label: "Download", icon: Download },

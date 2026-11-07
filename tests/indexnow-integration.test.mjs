@@ -11,14 +11,17 @@ const sitemap = fs.readFileSync("app/sitemap.ts", "utf8");
 const levels = JSON.parse(fs.readFileSync("data/levels.json", "utf8"));
 const blogSource = fs.readFileSync("data/blog-posts.ts", "utf8");
 const blogCount = [...blogSource.matchAll(/\bslug:\s*["']([^"']+)["']/g)].length;
-const expectedRouteCount = 9 + levels.length + blogCount;
+const guideSource = fs.readFileSync("data/guides.ts", "utf8");
+const guideCount = [...guideSource.matchAll(/\bslug:\s*["']([^"']+)["']/g)].length;
+const expectedRouteCount = 10 + levels.length + blogCount + guideCount;
 
 test("SEO manifest lists every public canonical route once", () => {
   assert.deepEqual(validateManifest(manifest), []);
   assert.equal(manifest.entries.length, expectedRouteCount);
   assert.equal(new Set(manifest.entries.map((entry) => entry.canonicalUrl)).size, expectedRouteCount);
-  assert.ok(manifest.entries.some((entry) => entry.canonicalUrl === "https://rotaterings.online/levels/10/"));
+  assert.ok(manifest.entries.some((entry) => entry.canonicalUrl === "https://rotaterings.online/levels/level-10/"));
   assert.ok(manifest.entries.some((entry) => entry.canonicalUrl === "https://rotaterings.online/find-level/"));
+  assert.ok(manifest.entries.some((entry) => entry.canonicalUrl === "https://rotaterings.online/guides/how-to-play/"));
 });
 
 test("IndexNow uses a public validation key and waits for production", () => {
@@ -36,5 +39,5 @@ test("Sitemap and IndexNow share the same route manifest", async () => {
   assert.match(sitemap, /seoManifest\.entries/);
   const dryRun = await notifyIndexNow({ current: manifest, checkpoint: null });
   assert.equal(dryRun.mode, "dry-run");
-  assert.equal(dryRun.urls, expectedRouteCount);
+  assert.equal(dryRun.urls, expectedRouteCount + manifest.deletedUrls.length);
 });
