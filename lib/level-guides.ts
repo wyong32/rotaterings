@@ -12,6 +12,20 @@ export interface LevelGuideFaq {
   answer: string;
 }
 
+export interface LevelGuideMistake {
+  title: string;
+  action: string;
+  consequence: string;
+}
+
+export interface LevelGuideComparisonImage {
+  label: string;
+  wrongImage: string;
+  wrongAlt: string;
+  correctImage: string;
+  correctAlt: string;
+}
+
 export interface RingBoardItem {
   id: number;
   color: string;
@@ -64,6 +78,7 @@ export interface LevelPhaseMetric {
 export interface VerifiedLevelGuide {
   objective: string;
   keyChallenge: string;
+  previousLevelDifference: string;
   quickAnswer: string;
   overallStrategy: string[];
   startingBoard: string;
@@ -74,6 +89,8 @@ export interface VerifiedLevelGuide {
   steps: LevelGuideStep[];
   beforeMove: string[];
   stuckPoint: string;
+  commonMistakes: LevelGuideMistake[];
+  comparisonImages?: LevelGuideComparisonImage[];
   sourceNote: string;
   faqs: LevelGuideFaq[];
 }

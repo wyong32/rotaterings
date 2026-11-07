@@ -1,214 +1,185 @@
 import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, "..");
-const workspaceRoot = path.resolve(rootDir, "..");
-
-const DEFAULT_CSV_PATH = "C:\\Users\\User\\Downloads\\Rotate Rings All Level Gameplay Walkthrough Solution.csv";
-const DEFAULT_BATCH_SIZE = 20;
-
-function loadGameConfig() {
-  const configPath =
-    process.env.GAME_UPDATE_CONFIG ||
-    path.join(workspaceRoot, "game-update-configs", "games", "rotaterings.json");
-
-  if (!fs.existsSync(configPath)) {
-    return {};
-  }
-
-  return JSON.parse(fs.readFileSync(configPath, "utf8"));
-}
-
-const gameConfig = loadGameConfig();
-const levelUpdateConfig = gameConfig.levelUpdates || {};
-const csvPath = process.argv[2] || process.env.COLONY_FLOW_CSV || levelUpdateConfig.sourcePath || DEFAULT_CSV_PATH;
-const batchSize = Number(process.env.COLONY_FLOW_BATCH_SIZE || levelUpdateConfig.batchSize || DEFAULT_BATCH_SIZE);
-
 const levelsPath = path.join(rootDir, "data", "levels.json");
+const guidesPath = path.join(rootDir, "data", "level-guides.json");
+const TARGET_LEVEL_COUNT = 260;
 
-function parseCsv(text) {
-  const rows = [];
-  let row = [];
-  let field = "";
-  let inQuotes = false;
+function getFlag(args, name) {
+  const index = args.indexOf(name);
+  if (index === -1 || !args[index + 1] || args[index + 1].startsWith("--")) {
+    throw new Error(`${name} requires a value`);
+  }
+  return args[index + 1];
+}
 
-  for (let i = 0; i < text.length; i += 1) {
-    const char = text[i];
-    const next = text[i + 1];
+export function parseRequestedLevelIds(args) {
+  const value = getFlag(args, "--levels");
+  const ids = [];
+  const seen = new Set();
 
-    if (inQuotes) {
-      if (char === "\"" && next === "\"") {
-        field += "\"";
-        i += 1;
-      } else if (char === "\"") {
-        inQuotes = false;
-      } else {
-        field += char;
+  for (const part of value.split(",").map((item) => item.trim()).filter(Boolean)) {
+    const match = part.match(/^(\d+)(?:-(\d+))?$/);
+    if (!match) throw new Error(`Invalid level selection: ${part}`);
+
+    const start = Number(match[1]);
+    const end = Number(match[2] ?? match[1]);
+    if (start > end) throw new Error(`Descending ranges are not supported: ${part}`);
+
+    for (let id = start; id <= end; id += 1) {
+      if (id < 1 || id > TARGET_LEVEL_COUNT) {
+        throw new Error(`Level ${id} is outside the supported 1-${TARGET_LEVEL_COUNT} range`);
       }
-      continue;
-    }
-
-    if (char === "\"") {
-      inQuotes = true;
-    } else if (char === ",") {
-      row.push(field);
-      field = "";
-    } else if (char === "\n") {
-      row.push(field.replace(/\r$/, ""));
-      rows.push(row);
-      row = [];
-      field = "";
-    } else {
-      field += char;
+      if (seen.has(id)) throw new Error(`Duplicate requested level: ${id}`);
+      seen.add(id);
+      ids.push(id);
     }
   }
 
-  if (field.length > 0 || row.length > 0) {
-    row.push(field.replace(/\r$/, ""));
-    rows.push(row);
-  }
-
-  return rows.filter((cells) => cells.some((cell) => cell.trim().length > 0));
+  if (ids.length === 0) throw new Error("--levels must select at least one level");
+  return ids;
 }
 
-function parseLevelNumber(value) {
-  const match = String(value || "").match(/level\s*-?\s*(\d+)/i) || String(value || "").match(/^(\d+)/);
-  return match ? Number(match[1]) : NaN;
+function assertText(value, label, minimum = 1) {
+  if (typeof value !== "string" || value.trim().length < minimum) {
+    throw new Error(`${label} is incomplete`);
+  }
 }
 
-function extractVideoId(row) {
-  const directVideoId = row.videoId || row.VideoId || row["Video ID"] || "";
-  if (directVideoId.trim()) {
-    return directVideoId.trim();
+function assertIsoDate(value, label) {
+  assertText(value, label);
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(value) || Number.isNaN(Date.parse(value))) {
+    throw new Error(`${label} must be an ISO timestamp with milliseconds`);
   }
-
-  const videoUrl = row["Video url"] || row.videoUrl || row.VideoUrl || "";
-  const match = videoUrl.match(/[?&]v=([^&]+)/) || videoUrl.match(/youtu\.be\/([^?&/]+)/) || videoUrl.match(/embed\/([^?&/]+)/);
-  return match ? match[1] : "";
 }
 
-function getDifficulty(levelNumber) {
-  if (levelNumber <= 30) {
-    return "Easy";
+function validateLevel(level, id) {
+  if (String(level.id) !== String(id)) throw new Error(`Level ${id} has a mismatched id`);
+  for (const field of ["title", "difficulty", "thumbnail", "coverImage", "description", "sourceType"]) {
+    assertText(level[field], `Level ${id} ${field}`);
   }
-
-  if (levelNumber <= 80) {
-    return "Medium";
+  assertIsoDate(level.publishedAt, `Level ${id} publishedAt`);
+  assertIsoDate(level.modifiedAt, `Level ${id} modifiedAt`);
+  if (Date.parse(level.modifiedAt) < Date.parse(level.publishedAt)) {
+    throw new Error(`Level ${id} modifiedAt cannot predate publishedAt`);
   }
-
-  if (levelNumber <= 120) {
-    return "Hard";
+  if (!Array.isArray(level.guideImages) || level.guideImages.length < 2) {
+    throw new Error(`Level ${id} needs at least two guide images`);
   }
-
-  return "Expert";
 }
 
-function normalizeThumbnail(row, videoId) {
-  const thumbnail = row["Thumbnail url"] || row.thumbnail || row.videoThumbnail || "";
-  if (thumbnail.trim()) {
-    return thumbnail.trim().replace("/maxresdefault.jpg", "/mqdefault.jpg");
+function validateGuide(guide, id) {
+  for (const field of [
+    "objective",
+    "keyChallenge",
+    "previousLevelDifference",
+    "quickAnswer",
+    "startingBoard",
+    "stuckPoint",
+    "sourceNote",
+  ]) {
+    assertText(guide[field], `Level ${id} guide ${field}`, 20);
   }
 
-  return `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
+  for (const [field, minimum] of [
+    ["overallStrategy", 2],
+    ["removalOrder", 2],
+    ["phaseMetrics", 2],
+    ["steps", 3],
+    ["commonMistakes", 2],
+    ["faqs", 2],
+  ]) {
+    if (!Array.isArray(guide[field]) || guide[field].length < minimum) {
+      throw new Error(`Level ${id} guide ${field} is incomplete`);
+    }
+  }
+
+  if (!guide.boardData || !Array.isArray(guide.boardData.rings) || guide.boardData.rings.length < 2) {
+    throw new Error(`Level ${id} guide boardData is incomplete`);
+  }
+  if (!guide.stats || !Number.isInteger(guide.stats.verifiedMoveCount)) {
+    throw new Error(`Level ${id} guide stats are incomplete`);
+  }
 }
 
-function buildLevel(row) {
-  const sourceTitle = row.Title || row.title || "";
-  const levelNumber = parseLevelNumber(sourceTitle);
-  const videoId = extractVideoId(row);
-  const completionTime = (row["Duration in timestamp"] || row.Time || row.completionTime || "").trim();
+export function validateBatchRecords({ requestedIds, existingLevels, batchLevels, batchGuides }) {
+  const existingIds = new Set(existingLevels.map((level) => Number(level.id)));
+  const levelIds = batchLevels.map((level) => Number(level.id));
+  const duplicateBatchIds = levelIds.filter((id, index) => levelIds.indexOf(id) !== index);
+  if (duplicateBatchIds.length > 0) throw new Error(`Duplicate batch level: ${duplicateBatchIds[0]}`);
 
-  if (!Number.isFinite(levelNumber) || !videoId || !completionTime) {
-    return null;
+  const requested = [...requestedIds].sort((a, b) => a - b);
+  const provided = [...levelIds].sort((a, b) => a - b);
+  if (JSON.stringify(requested) !== JSON.stringify(provided)) {
+    throw new Error(`Batch levels do not match requested levels: expected ${requested.join(", ")}`);
   }
 
-  const thumbnail = normalizeThumbnail(row, videoId);
+  const guideIds = Object.keys(batchGuides).map(Number).sort((a, b) => a - b);
+  if (JSON.stringify(requested) !== JSON.stringify(guideIds)) {
+    throw new Error(`Batch guides do not match requested levels: expected ${requested.join(", ")}`);
+  }
+
+  for (const id of requested) {
+    if (existingIds.has(id)) throw new Error(`Level ${id} is already published`);
+    validateLevel(batchLevels.find((level) => Number(level.id) === id), id);
+    validateGuide(batchGuides[String(id)], id);
+  }
+
+  const serialized = JSON.stringify({ batchLevels, batchGuides }).toLowerCase();
+  const unrelatedTerms = [
+    "jam" + " bus",
+    "sand" + "fall",
+    "worker" + " ant",
+    "colony" + " slot",
+    "cube" + " stack",
+  ];
+  if (unrelatedTerms.some((term) => serialized.includes(term))) {
+    throw new Error("Batch contains content from another game");
+  }
 
   return {
-    id: String(levelNumber),
-    title: `Rotate Rings Level ${levelNumber}`,
-    difficulty: getDifficulty(levelNumber),
-    thumbnail,
-    category: "Ant Colony Levels",
-    description: `Watch the Rotate Rings Level ${levelNumber} walkthrough and learn the best order to send worker ants, match cube colors, open colony slots, and clear the puzzle board.`,
-    completionTime,
-    videoUrl: `https://www.youtube.com/embed/${videoId}`,
-    videoId,
-    videoThumbnail: thumbnail,
-    videoDuration: completionTime,
-    videoTitle: `Rotate Rings Level ${levelNumber} Gameplay Walkthrough Solution`,
-    guide: [
-      {
-        title: `Rotate Rings Level ${levelNumber} Walkthrough`,
-        steps: [
-          "Study the cube stacks, color holes, and available colony slots before making the first move.",
-          "Send worker ants from the stack that can immediately deliver cubes to a matching color hole.",
-          "Keep at least one colony slot open so the trail does not become blocked by the wrong color.",
-          `Use the video route to copy the safest order and finish Rotate Rings Level ${levelNumber} without wasting moves.`,
-        ],
-      },
-    ],
-    tips: [
-      "Plan two or three ant moves ahead before tapping a cube stack.",
-      "Clear colors with fewer cubes first when space is limited.",
-      "Avoid filling colony slots with colors that have no open matching hole.",
-      "Pause the walkthrough at each major board change if the puzzle feels crowded.",
-    ],
-    tags: [
-      "Rotate Rings",
-      `Rotate Rings Level ${levelNumber}`,
-      "walkthrough",
-      "solution",
-      "ant puzzle",
-      "color sorting",
-    ],
+    levels: [...batchLevels].sort((a, b) => Number(a.id) - Number(b.id)),
+    guides: Object.fromEntries(requested.map((id) => [String(id), batchGuides[String(id)]])),
   };
 }
 
-const levels = JSON.parse(fs.readFileSync(levelsPath, "utf8"));
-const currentMax = Math.max(...levels.map((level) => parseLevelNumber(level.id)).filter(Number.isFinite));
-const rows = parseCsv(fs.readFileSync(csvPath, "utf8"));
-const headers = rows.shift();
+export function syncVerifiedBatch({ inputPath, requestedIds }) {
+  const existingLevels = JSON.parse(fs.readFileSync(levelsPath, "utf8"));
+  const existingGuides = JSON.parse(fs.readFileSync(guidesPath, "utf8"));
+  const batch = JSON.parse(fs.readFileSync(inputPath, "utf8"));
+  const validated = validateBatchRecords({
+    requestedIds,
+    existingLevels,
+    batchLevels: batch.levels ?? [],
+    batchGuides: batch.guides ?? {},
+  });
 
-const csvLevels = rows
-  .map((cells) => Object.fromEntries(headers.map((header, index) => [header, cells[index] || ""])))
-  .map(buildLevel)
-  .filter(Boolean)
-  .sort((a, b) => Number(a.id) - Number(b.id));
+  const nextLevels = [...existingLevels, ...validated.levels].sort((a, b) => Number(a.id) - Number(b.id));
+  const nextGuides = Object.fromEntries(
+    Object.entries({ ...existingGuides, ...validated.guides }).sort(([left], [right]) => Number(left) - Number(right)),
+  );
 
-const selected = csvLevels.filter((level) => Number(level.id) > currentMax).slice(0, batchSize);
-const byId = new Map(levels.map((level) => [level.id, level]));
-
-for (const level of selected) {
-  byId.set(level.id, level);
+  fs.writeFileSync(levelsPath, `${JSON.stringify(nextLevels, null, 2)}\n`);
+  fs.writeFileSync(guidesPath, `${JSON.stringify(nextGuides, null, 2)}\n`);
+  return { added: requestedIds, publishedCount: nextLevels.length };
 }
 
-const updated = Array.from(byId.values()).sort((a, b) => parseLevelNumber(a.id) - parseLevelNumber(b.id));
-fs.writeFileSync(levelsPath, `${JSON.stringify(updated, null, 2)}\n`);
+function main(args) {
+  const requestedIds = parseRequestedLevelIds(args);
+  const inputValue = getFlag(args, "--input");
+  const inputPath = path.resolve(process.cwd(), inputValue);
+  if (!fs.existsSync(inputPath)) throw new Error(`Input file not found: ${inputPath}`);
+  console.log(JSON.stringify(syncVerifiedBatch({ inputPath, requestedIds }), null, 2));
+}
 
-const numericRowsAboveMax = csvLevels.filter((level) => Number(level.id) > currentMax).map((level) => Number(level.id));
-const expectedEnd = selected.length > 0 ? Number(selected[selected.length - 1].id) : currentMax;
-const skippedBetween = [];
-for (let level = currentMax + 1; level <= expectedEnd; level += 1) {
-  if (!numericRowsAboveMax.includes(level)) {
-    skippedBetween.push(level);
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  try {
+    main(process.argv.slice(2));
+  } catch (error) {
+    console.error(error instanceof Error ? error.message : error);
+    process.exitCode = 1;
   }
 }
-
-console.log(
-  JSON.stringify(
-    {
-      csvPath,
-      batchSize,
-      previousMax: currentMax,
-      added: selected.map((level) => Number(level.id)),
-      newMax: Math.max(...updated.map((level) => parseLevelNumber(level.id)).filter(Number.isFinite)),
-      availableAfterPreviousMax: numericRowsAboveMax.length,
-      skippedBetween,
-    },
-    null,
-    2,
-  ),
-);

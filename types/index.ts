@@ -10,6 +10,8 @@ export interface Level {
   id: string;
   title: string;
   difficulty: Difficulty;
+  publishedAt: string;
+  modifiedAt: string;
   thumbnail: string;
   category: string;
   description: string;

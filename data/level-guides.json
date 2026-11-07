@@ -2,6 +2,7 @@
   "1": {
     "objective": "Separate the two linked C-rings by opening the cyan ring toward the center connection.",
     "keyChallenge": "The first tutorial has only one interlock, but the gap must face the shared center before either ring can leave.",
+    "previousLevelDifference": "Level 1 is the baseline board: two equal C-rings share one center connection, with no rails, clamps, or secondary branches.",
     "quickAnswer": "Use the cyan ring on the left first. Rotate it until its opening faces the center joint, then let it slide away from the orange ring on the right. The orange ring is no longer trapped and clears the board.",
     "overallStrategy": [
       "Read the board from its exposed outside edge. Level 1 starts with 2 rings, 0 rigid supports, and 0 clamps.",
@@ -120,6 +121,18 @@
       "Release the drag and confirm the piece separates before the next move."
     ],
     "stuckPoint": "The cyan ring will not separate while its opening faces away from the orange ring. Bring the gap to the shared center before releasing the drag.",
+    "commonMistakes": [
+      {
+        "title": "Dragging the closed cyan side",
+        "action": "Pulling the left cyan ring while its gap still faces away from the shared center joint.",
+        "consequence": "The solid arc catches the orange ring, so the cyan piece returns to its starting position."
+      },
+      {
+        "title": "Starting with the orange ring",
+        "action": "Rotating the right orange ring before the left cyan ring has cleared the single interlock.",
+        "consequence": "The center connection stays occupied, adding a rotation without opening a valid exit."
+      }
+    ],
     "sourceNote": "The public Game Rush recording begins at in-game Level 2. Level 1 board geometry is taken from the official online game's Level 1 configuration; the images are labeled reconstructions, not video frames.",
     "faqs": [
       {
@@ -143,6 +156,7 @@
   "2": {
     "objective": "Remove the cyan, orange, and purple rings from the three-ring triangular chain.",
     "keyChallenge": "The lower purple ring holds both upper rings, so the free cyan side must open first.",
+    "previousLevelDifference": "Level 2 adds a third ring below the pair. The lower purple ring now connects both upper pieces, so the board has two active center links instead of one.",
     "quickAnswer": "Start with the cyan ring at the upper-right and turn its gap toward the center bridge. Remove the orange upper-left ring next. Finish with the purple lower ring after both upper links are gone.",
     "overallStrategy": [
       "Read the board from its exposed outside edge. Level 2 starts with 3 rings, 0 rigid supports, and 0 clamps.",
@@ -283,6 +297,18 @@
       "Release the drag and confirm the piece separates before the next move."
     ],
     "stuckPoint": "Turning the lower purple ring first keeps both upper links under tension. The video clears the unlinked cyan side before touching the center support.",
+    "commonMistakes": [
+      {
+        "title": "Pulling the purple support first",
+        "action": "Dragging the lower-center purple ring while the orange and cyan rings still occupy both upper links.",
+        "consequence": "Both contact points remain loaded, so the purple ring cannot pass through either upper opening."
+      },
+      {
+        "title": "Choosing orange before cyan",
+        "action": "Rotating the upper-left orange ring before opening the unlinked upper-right cyan side.",
+        "consequence": "The lower support still braces the left branch, while the clean cyan exit remains unused."
+      }
+    ],
     "sourceNote": "The Game Rush recording shows the in-game Level 2 board between 0 and 9.5 seconds.",
     "faqs": [
       {
@@ -306,6 +332,7 @@
   "3": {
     "objective": "Untangle the four-ring vertical diamond without trapping the top cyan ring.",
     "keyChallenge": "The cyan top ring carries two link points, while the side rings have simpler exits.",
+    "previousLevelDifference": "Level 3 changes the triangle into a four-ring diamond. The new top cyan ring carries two linked points, while the purple and orange side rings each offer a simpler first exit.",
     "quickAnswer": "Clear the purple ring on the right side first. Open the orange ring on the left next, then remove the red lower ring. The cyan top ring is last because it begins with two linked points.",
     "overallStrategy": [
       "Read the board from its exposed outside edge. Level 3 starts with 4 rings, 0 rigid supports, and 0 clamps.",
@@ -468,6 +495,18 @@
       "Release the drag and confirm the piece separates before the next move."
     ],
     "stuckPoint": "The cyan top ring looks prominent, but it has two linked points. Removing either side ring first reduces the center load and prevents repeated rotations.",
+    "commonMistakes": [
+      {
+        "title": "Opening the cyan top first",
+        "action": "Rotating the upper-center cyan ring before either side ring has left the diamond-shaped chain.",
+        "consequence": "Its two linked points remain occupied, so the gap changes angle without producing a release path."
+      },
+      {
+        "title": "Moving red before the sides",
+        "action": "Pulling the lower red ring while the orange and purple side branches still hold the cyan center.",
+        "consequence": "The vertical chain stays closed and the red opening cannot clear the upper cyan connection."
+      }
+    ],
     "sourceNote": "The Game Rush recording shows the in-game Level 3 board between 12 and 22 seconds.",
     "faqs": [
       {
@@ -491,6 +530,7 @@
   "4": {
     "objective": "Dismantle the seven-ring branching chain from its open upper edge to the locked center.",
     "keyChallenge": "The purple center ring has two linked points and stays blocked until the surrounding branches are reduced.",
+    "previousLevelDifference": "Level 4 expands from four rings to a seven-ring branching chain. The center purple ring replaces the simple diamond junction and cannot move until the upper and lower branches shrink.",
     "quickAnswer": "Remove the orange top ring and cyan upper-right ring first. Clear the blue and lime lower branches, then open the green right ring. Finish the purple center and red left ring after the outside links are gone.",
     "overallStrategy": [
       "Read the board from its exposed outside edge. Level 4 starts with 7 rings, 0 rigid supports, and 0 clamps.",
@@ -719,6 +759,18 @@
       "Release the drag and confirm the piece separates before the next move."
     ],
     "stuckPoint": "The purple ring should not be the opener. Its two linked points remain blocked by the upper and lower branches, so early center rotations do not create an exit.",
+    "commonMistakes": [
+      {
+        "title": "Turning the purple center first",
+        "action": "Rotating the middle purple ring while both its upper cyan branch and lower lime branch remain attached.",
+        "consequence": "Both linked points stay occupied, so the center turns in place without opening either branch."
+      },
+      {
+        "title": "Taking cyan before orange",
+        "action": "Trying to remove the upper-right cyan ring before clearing the exposed orange ring above it.",
+        "consequence": "The orange branch still blocks cyan's upper exit and forces an unnecessary correction move."
+      }
+    ],
     "sourceNote": "The Game Rush recording shows the in-game Level 4 board between 28 and 48.5 seconds.",
     "faqs": [
       {
@@ -742,6 +794,7 @@
   "5": {
     "objective": "Open the seven-ring wheel around the closed purple center without wasting rotations.",
     "keyChallenge": "The purple center has no gap and four linked points, so every outer ring must be cleared around it.",
+    "previousLevelDifference": "Level 5 keeps seven pieces but replaces Level 4's open purple C-ring with a closed four-link hub. Progress now comes from clearing the outer lower arc before loosening the center.",
     "quickAnswer": "Work around the outside instead of rotating the closed purple center. The successful run removes the red and blue lower rings, then the lime right ring. It continues through purple-adjacent, cyan, green, and orange pieces until the center is free.",
     "overallStrategy": [
       "Read the board from its exposed outside edge. Level 5 starts with 7 rings, 0 rigid supports, and 0 clamps.",
@@ -970,6 +1023,18 @@
       "Release the drag and confirm the piece separates before the next move."
     ],
     "stuckPoint": "The center purple circle has a zero-degree opening in the official data, meaning it is a closed loop. Treat it as the hub, not the first movable exit.",
+    "commonMistakes": [
+      {
+        "title": "Forcing the closed purple hub",
+        "action": "Dragging or rotating the middle purple circle as though it has a C-ring opening.",
+        "consequence": "The zero-degree opening provides no exit, and all four outer connections continue to hold the hub."
+      },
+      {
+        "title": "Clearing the upper arc first",
+        "action": "Starting with cyan or green before removing the lower-left red and bottom blue rings.",
+        "consequence": "The lower branch stays crowded and the center cannot loosen through the verified open side."
+      }
+    ],
     "sourceNote": "The Game Rush recording shows the in-game Level 5 board between 50 and 76.5 seconds.",
     "faqs": [
       {
@@ -993,6 +1058,7 @@
   "6": {
     "objective": "Remove six rings and two rigid rails from the first mixed-mechanic board.",
     "keyChallenge": "The orange rail and green lower rail are rigid supports; rotating nearby rings without freeing these rails keeps the chain locked.",
+    "previousLevelDifference": "Level 6 replaces the closed hub with six C-rings, two rigid rails, and two clamps. Rails slide rather than rotate, so the solution starts with a different interaction type.",
     "quickAnswer": "Clear the exposed green lower rail and blue lower ring first. Remove the green right ring, then release the orange upper rail. Finish the red and purple middle links before clearing the cyan and orange rings on the left.",
     "overallStrategy": [
       "Read the board from its exposed outside edge. Level 6 starts with 6 rings, 2 rigid supports, and 2 clamps.",
@@ -1215,6 +1281,18 @@
       "Release the drag and confirm the piece separates before the next move."
     ],
     "stuckPoint": "The rails do not rotate like C-rings. If the lower green rail stays in place, the blue and center pieces keep overlapping the same exit corridor.",
+    "commonMistakes": [
+      {
+        "title": "Rotating before sliding the rail",
+        "action": "Turning the lower blue or center red ring while the exposed green lower rail still crosses the exit corridor.",
+        "consequence": "The same overlap remains in place, so neither ring can separate through the blocked lower path."
+      },
+      {
+        "title": "Treating rails like C-rings",
+        "action": "Trying to spin the straight orange or green support instead of pulling it along its open direction.",
+        "consequence": "The rigid piece does not create a gap, leaving its clamp and neighboring ring connections unchanged."
+      }
+    ],
     "sourceNote": "The Game Rush recording shows the in-game Level 6 board between 78 and 92.5 seconds.",
     "faqs": [
       {
@@ -1238,6 +1316,7 @@
   "7": {
     "objective": "Release seven rings from two rigid frames and four clamps without blocking the cyan center.",
     "keyChallenge": "The cyan center carries four linked points, the highest count in this batch, and must remain until the frames are removed.",
+    "previousLevelDifference": "Level 7 adds large frames on both outer edges and raises the center cyan ring to four linked points. Both frames must leave before the ring chain can be reduced safely.",
     "quickAnswer": "Remove the green rectangular frame and red angled frame before working inward. Clear the orange and lower purple rings, then the lime and red branches. Finish the upper purple, blue, and cyan center pieces in that order.",
     "overallStrategy": [
       "Read the board from its exposed outside edge. Level 7 starts with 7 rings, 2 rigid supports, and 4 clamps.",
@@ -1481,6 +1560,18 @@
       "Release the drag and confirm the piece separates before the next move."
     ],
     "stuckPoint": "The cyan center is visually open but still has four linked points. Rotating it before both frames are removed changes the angle without creating a valid exit.",
+    "commonMistakes": [
+      {
+        "title": "Rotating the four-link cyan center",
+        "action": "Turning the middle cyan ring before the green left frame and red right frame have both been removed.",
+        "consequence": "All four linked points remain occupied, so the center angle changes but no exit becomes available."
+      },
+      {
+        "title": "Opening rings before both frames",
+        "action": "Working on the orange or purple right branch while either outer rectangular frame still braces the board.",
+        "consequence": "The frame keeps the branch aligned against the center and blocks the corridor needed for release."
+      }
+    ],
     "sourceNote": "The Game Rush recording shows the in-game Level 7 board between 98 and 118.5 seconds.",
     "faqs": [
       {
@@ -1504,6 +1595,7 @@
   "8": {
     "objective": "Clear the nine-ring tree from the lower orange row up through the paired top rings.",
     "keyChallenge": "Three orange rings share the bottom row, while the purple center carries two links into the upper pair.",
+    "previousLevelDifference": "Level 8 removes the rigid frames but expands the ring chain to nine pieces. Three orange rings repeat along the bottom, and the two-link purple center controls both upper branches.",
     "quickAnswer": "Open the exposed lower-right orange branch first, then clear the lime and top green rings. Remove the upper blue and red pair before working through purple and cyan. Finish the center and left orange rings after the vertical chain collapses.",
     "overallStrategy": [
       "Read the board from its exposed outside edge. Level 8 starts with 9 rings, 0 rigid supports, and 0 clamps.",
@@ -1774,6 +1866,18 @@
       "Release the drag and confirm the piece separates before the next move."
     ],
     "stuckPoint": "The center purple ring connects both upper branches. If it is rotated before either top branch is free, the same two intersections remain locked.",
+    "commonMistakes": [
+      {
+        "title": "Turning the purple junction early",
+        "action": "Rotating the middle-left purple ring while the blue and green upper branches still meet through it.",
+        "consequence": "Both intersections remain active, so the purple opening cannot pass either upper connection."
+      },
+      {
+        "title": "Starting from the middle orange",
+        "action": "Pulling the bottom-center orange ring before opening the exposed lower-right orange and lime branch.",
+        "consequence": "The center of the tree remains supported on both sides and the selected orange ring cannot clear cleanly."
+      }
+    ],
     "sourceNote": "The Game Rush recording shows the in-game Level 8 board between 124 and 144.5 seconds.",
     "faqs": [
       {
@@ -1797,6 +1901,7 @@
   "9": {
     "objective": "Reduce the nine-ring staggered chain from its open center to the final green right column.",
     "keyChallenge": "The right side contains a blue top ring and two green rings in a vertical chain, so the center must be opened before that column can fall.",
+    "previousLevelDifference": "Level 9 keeps nine rings but changes the tree into a staggered grid. The right side becomes a braced blue-and-green column, while the red center is now the verified opener.",
     "quickAnswer": "Clear the red center and lower orange ring first. Remove the lower cyan and left orange branches, then release the purple upper-middle link. Finish with the cyan and blue top rings before clearing the two green rings on the right.",
     "overallStrategy": [
       "Read the board from its exposed outside edge. Level 9 starts with 9 rings, 0 rigid supports, and 0 clamps.",
@@ -2067,6 +2172,18 @@
       "Release the drag and confirm the piece separates before the next move."
     ],
     "stuckPoint": "The two green rings on the right look exposed, but the blue top ring still braces the column. Clear the center and blue ring before finishing green.",
+    "commonMistakes": [
+      {
+        "title": "Starting with the green column",
+        "action": "Rotating either right-side green ring before the red center and upper-right blue ring are removed.",
+        "consequence": "The vertical chain remains braced from above, so the green openings do not reach a free outer edge."
+      },
+      {
+        "title": "Removing green before blue",
+        "action": "Trying to clear the upper green ring while the blue top ring still closes the column's upper exit.",
+        "consequence": "Blue continues to hold the column, forcing the green ring back into the same locked position."
+      }
+    ],
     "sourceNote": "The Game Rush recording shows the in-game Level 9 board between 146 and 164.5 seconds.",
     "faqs": [
       {
@@ -2090,6 +2207,7 @@
   "10": {
     "objective": "Dismantle the large cyan ring and H assembly with its mirrored colored rails and clamps.",
     "keyChallenge": "This board uses four oversized rings, eight supports, and seven clamps. The small colored latches must clear before the cyan frame can move.",
+    "previousLevelDifference": "Level 10 replaces the nine-ring grid with an oversized cyan circle, an inner H, eight supports, and seven clamps. Small mirrored latch groups must be dismantled before either central frame moves.",
     "quickAnswer": "Work from the upper-right latch cluster to the lower-left cluster. Remove the purple latch, orange arm, and green frame on the upper-right. Repeat that sequence on the lower-left, then separate the outer cyan circle from the inner cyan H.",
     "overallStrategy": [
       "Read the board from its exposed outside edge. Level 10 starts with 4 rings, 8 rigid supports, and 7 clamps.",
@@ -2282,6 +2400,18 @@
       "Release the drag and confirm the piece separates before the next move."
     ],
     "stuckPoint": "The large cyan circle is not the opener. Seven clamps still hold the mirrored rail groups, so the circle cannot clear the H until both corners are dismantled.",
+    "commonMistakes": [
+      {
+        "title": "Rotating the cyan circle first",
+        "action": "Turning the outer cyan circle while the upper-right and lower-left latch assemblies still occupy seven clamps.",
+        "consequence": "The circle remains pinned against the inner H, so the large movement does not create a release path."
+      },
+      {
+        "title": "Clearing only one corner",
+        "action": "Removing the upper-right latch group and then pulling the cyan frame before dismantling the mirrored lower-left group.",
+        "consequence": "The remaining clamps still hold the frame diagonally, preventing the outer circle from clearing the inner H."
+      }
+    ],
     "sourceNote": "The Game Rush recording shows the in-game Level 10 board between 166 and 186.5 seconds.",
     "faqs": [
       {
