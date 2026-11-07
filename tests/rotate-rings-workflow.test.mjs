@@ -7,6 +7,12 @@ import sharp from "sharp";
 const read = (file) => fs.readFileSync(file, "utf8");
 const levels = JSON.parse(read("data/levels.json"));
 const guides = JSON.parse(read("data/level-guides.json"));
+const repositoryRoot = process.cwd();
+const localWorkflowRoot = [
+  path.join(repositoryRoot, "local-workflow"),
+  path.resolve(repositoryRoot, "..", "..", "rotaterings", "local-workflow"),
+].find((candidate) => fs.existsSync(path.join(candidate, "rotate-rings-release-plan.md")));
+const automationPath = path.join(process.env.USERPROFILE ?? "", ".codex", "automations", "rotate-rings-5", "automation.toml");
 
 test("public routes and metadata belong to rotaterings.online", () => {
   const sources = [
@@ -118,4 +124,35 @@ test("README stays limited to the site summary and core public URLs", () => {
   assert.match(readme, /https:\/\/rotaterings\.online\/levels\/1\//);
   assert.match(readme, /https:\/\/rotaterings\.online\/#play/);
   assert.doesNotMatch(readme, /Vercel|GitHub|workflow|local-workflow/i);
+});
+
+test("local release plan prioritizes verified Levels 100-200 and 30-50 pages per week", { skip: !localWorkflowRoot }, () => {
+  const plan = read(path.join(localWorkflowRoot, "rotate-rings-release-plan.md"));
+  assert.match(plan, /Levels 100-200/i);
+  assert.match(plan, /30-50 pages per week/i);
+  assert.match(plan, /\/levels\/level-\{level\}\//);
+  assert.match(plan, /verified-only|verified only/i);
+  assert.match(plan, /11-30[\s\S]*201-260[\s\S]*31-99/i);
+  assert.doesNotMatch(plan, /next five standard levels in strict numeric order/i);
+});
+
+test("local progress records the priority range, weekly target, and production gates", { skip: !localWorkflowRoot }, () => {
+  const progress = JSON.parse(read(path.join(localWorkflowRoot, "update-progress.json")));
+  assert.equal(progress.targetLevelCount, 260);
+  assert.deepEqual(progress.priorityRange, [100, 200]);
+  assert.deepEqual(progress.weeklyTarget, { minimum: 30, maximum: 50 });
+  assert.deepEqual(progress.releaseOrder, ["100-200", "11-30", "201-260", "31-99"]);
+  assert.equal(progress.progressAdvancementRequires.productionVerification, true);
+  assert.equal(progress.progressAdvancementRequires.indexNow, true);
+});
+
+test("scheduled updater uses the verified priority queue and final publication gates", { skip: !fs.existsSync(automationPath) }, () => {
+  const automation = read(automationPath);
+  assert.match(automation, /100-200/);
+  assert.match(automation, /30-50/);
+  assert.match(automation, /\/levels\/level-N\//);
+  assert.match(automation, /Vercel/);
+  assert.match(automation, /IndexNow/);
+  assert.match(automation, /update-progress\.json/);
+  assert.doesNotMatch(automation, /下一批从 Levels 11-15 开始/);
 });
