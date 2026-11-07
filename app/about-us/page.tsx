@@ -31,7 +31,7 @@ export default function AboutUsPage() {
                 <li className="leading-relaxed">Checked written steps for levels that have completed editorial review.</li>
                 <li className="leading-relaxed">A browser-only screenshot finder for matching a board to available guides.</li>
                 <li className="leading-relaxed">Beginner-friendly articles for learning the game mechanics.</li>
-                <li className="leading-relaxed">Download links for the official iOS and Android app pages.</li>
+                <li className="leading-relaxed">Links to the official App Store and Google Play listings.</li>
                 <li className="leading-relaxed">Updates when reliable level videos and board images are available.</li>
               </ul>
             </section>

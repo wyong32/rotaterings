@@ -26,7 +26,7 @@ export function Footer() {
               <h2 className="text-2xl font-bold text-foreground">{GAME_NAME}</h2>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              {SITE_NAME} provides Rotate Rings walkthrough videos, board screenshots, ring-order solutions, and download guidance for the puzzle game by {GAME_DEVELOPER}.
+              {SITE_NAME} provides walkthrough videos, board screenshots, ring-order solutions, and store guidance for Rotate Rings.
             </p>
           </div>
 
@@ -89,6 +89,9 @@ export function Footer() {
       <div className="border-t border-border"></div>
 
       <div className="container mx-auto px-6 py-8">
+        <p className="mb-6 max-w-4xl text-xs leading-6 text-muted-foreground">
+          {SITE_NAME} is an independent fan guide. It is not affiliated with, endorsed by, or connected to {GAME_DEVELOPER}. Rotate Rings is a trademark of {GAME_DEVELOPER}; game names, artwork, and store listings belong to their respective owners.
+        </p>
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
             Copyright 2026 {SITE_NAME}. All rights reserved.
