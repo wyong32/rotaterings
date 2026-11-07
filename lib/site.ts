@@ -4,6 +4,8 @@ export const GAME_NAME = "Rotate Rings";
 export const GAME_DEVELOPER = "Nebula Studio";
 export const APP_STORE_URL = "https://apps.apple.com/us/app/rotate-rings/id6793924927";
 export const GOOGLE_PLAY_URL = "https://play.google.com/store/apps/details?id=com.nebula.rotaterings";
+export const YANDEX_GAMES_URL = "https://yandex.com/games/search?query=Rotate%20Rings";
+export const ONLINE_GAME_URL = "https://games.rotaterings.net/game/rotate-rings/index.html?v=20261016";
 export const DOWNLOAD_COUNT = "10M+";
 export const RATING_VALUE = "4.8";
 export const RATING_COUNT = "83000";
@@ -15,7 +17,7 @@ export const gameDescription =
   "Rotate Rings is a spatial logic puzzle. Turn interlocked rings, align each opening with the correct connector, and release the shapes in a workable order.";
 
 export const siteDescription =
-  "Play Rotate Rings online and find verified walkthroughs, board screenshots, ring-order notes, video solutions, and official mobile download links.";
+  "Play Rotate Rings online and find verified walkthroughs, board screenshots, ring-order notes, video solutions, and store links to the official App Store and Google Play listings.";
 
 export const gameKeywords = [
   "Rotate Rings",

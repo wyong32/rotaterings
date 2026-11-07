@@ -10,9 +10,11 @@ const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 test("homepage provides the approved online Rotate Rings game", () => {
   const page = read("app/page.tsx");
   const component = read("components/home/online-game.tsx");
+  const site = read("lib/site.ts");
 
   assert.match(page, /OnlineGame/);
-  assert.match(component, /games\.rotaterings\.net\/game\/rotate-rings\/index\.html\?v=20261016/);
+  assert.match(site, /games\.rotaterings\.net\/game\/rotate-rings\/index\.html\?v=20261016/);
+  assert.match(component, /ONLINE_GAME_URL/);
   assert.match(component, /iframe/);
   assert.match(component, /Reload/);
   assert.match(component, /Full screen/);

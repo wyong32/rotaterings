@@ -1,55 +1,66 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Expand, ExternalLink, Gamepad2, RefreshCw } from "lucide-react";
-
-const GAME_URL = "https://games.rotaterings.net/game/rotate-rings/index.html?v=20261016";
+import { Expand, ExternalLink, Gamepad2, Play, RotateCcw } from "lucide-react";
+import { ONLINE_GAME_URL } from "@/lib/site";
 
 export function OnlineGame() {
   const frame = useRef<HTMLDivElement>(null);
   const [reloadKey, setReloadKey] = useState(0);
+
+  function playGame() {
+    setReloadKey((key) => key + 1);
+    frame.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
 
   async function enterFullScreen() {
     await frame.current?.requestFullscreen?.();
   }
 
   return (
-    <section id="play" className="border-b border-border bg-[#fff7e6] py-14" aria-labelledby="play-heading">
+    <section id="play" className="border-b border-border bg-[#eaf8fb] py-8 sm:py-10" aria-labelledby="play-heading">
       <div className="container mx-auto px-4 sm:px-6">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="text-sm font-bold uppercase text-[#0b7285]">Free browser game</p>
-          <h2 id="play-heading" className="mt-2 text-3xl font-bold text-[#17313a] sm:text-4xl">Play Rotate Rings Online</h2>
-          <p className="mt-3 leading-7 text-[#52676d]">Rotate the open loops, line each gap up with its connection, and separate every piece. Progress in this browser version is stored by the game provider.</p>
+        <div className="mx-auto max-w-5xl text-center">
+          <p className="text-sm font-bold uppercase text-[#0b7285]">Play in your browser</p>
+          <h1 id="play-heading" className="mt-2 text-4xl font-bold leading-tight text-[#17313a] sm:text-5xl">
+            Play Rotate Rings Online <span className="block sm:inline">— Free Browser Puzzle</span>
+          </h1>
+          <p className="mt-3 flex flex-wrap justify-center gap-x-3 gap-y-1 text-sm font-semibold text-[#435f68]">
+            <span>Free browser puzzle</span><span aria-hidden="true">·</span><span>No download</span><span aria-hidden="true">·</span><span>Works on mobile</span>
+          </p>
         </div>
 
-        <div className="mx-auto mt-8 max-w-[760px] border border-[#d7c5a9] bg-white p-3 shadow-sm">
+        <div className="mx-auto mt-6 max-w-[900px] border border-[#9fcbd3] bg-white p-3 shadow-sm">
           <div className="mb-3 flex flex-wrap items-center justify-between gap-3 border-b border-border pb-3">
             <span className="inline-flex items-center gap-2 font-bold text-[#17313a]"><Gamepad2 className="h-5 w-5 text-[#d9480f]" /> Rotate Rings</span>
             <div className="flex flex-wrap gap-2">
-              <button type="button" onClick={() => setReloadKey((key) => key + 1)} className="inline-flex items-center gap-2 border border-border px-3 py-2 text-sm font-bold hover:border-primary" title="Reload the game">
-                <RefreshCw className="h-4 w-4" /> Reload
+              <button type="button" onClick={playGame} className="inline-flex h-10 items-center gap-2 bg-[#d9480f] px-4 text-sm font-bold text-white hover:bg-[#b93d0d]" title="Start or restart the game">
+                <Play className="h-4 w-4" /> Play
               </button>
-              <button type="button" onClick={enterFullScreen} className="inline-flex items-center gap-2 border border-border px-3 py-2 text-sm font-bold hover:border-primary" title="Open full screen">
+              <button type="button" onClick={() => setReloadKey((key) => key + 1)} className="inline-flex h-10 items-center gap-2 border border-border px-3 text-sm font-bold hover:border-primary" title="Reload the game">
+                <RotateCcw className="h-4 w-4" /> Reload
+              </button>
+              <button type="button" onClick={enterFullScreen} className="inline-flex h-10 items-center gap-2 border border-border px-3 text-sm font-bold hover:border-primary" title="Open full screen">
                 <Expand className="h-4 w-4" /> Full screen
               </button>
-              <a href={GAME_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 border border-primary px-3 py-2 text-sm font-bold text-primary hover:bg-primary hover:text-primary-foreground">
+              <a href={ONLINE_GAME_URL} target="_blank" rel="noopener noreferrer" className="inline-flex h-10 items-center gap-2 border border-primary px-3 text-sm font-bold text-primary hover:bg-primary hover:text-primary-foreground">
                 <ExternalLink className="h-4 w-4" /> Open game
               </a>
             </div>
           </div>
-          <div ref={frame} className="relative mx-auto aspect-[9/16] max-h-[760px] min-h-[560px] w-full overflow-hidden bg-black sm:min-h-[680px]">
+          <div ref={frame} className="relative mx-auto aspect-[9/16] min-h-[520px] w-full max-w-[360px] overflow-hidden bg-black sm:min-h-[620px] lg:aspect-[16/10] lg:min-h-[520px] lg:max-w-none">
             <iframe
               key={reloadKey}
-              src={GAME_URL}
+              src={ONLINE_GAME_URL}
               title="Play Rotate Rings online"
               className="h-full w-full border-0"
               allow="autoplay; fullscreen; gamepad"
               allowFullScreen
-              loading="lazy"
+              loading="eager"
               referrerPolicy="strict-origin-when-cross-origin"
             />
           </div>
-          <p className="mt-3 text-xs leading-5 text-muted-foreground">If the embedded game does not load, use Open game. The online game is hosted by games.rotaterings.net.</p>
+          <p className="mt-3 text-xs leading-5 text-muted-foreground">Progress and availability are controlled by the game provider. If the frame does not load, use Open game to launch the same authorized browser version in a new tab.</p>
         </div>
       </div>
     </section>
